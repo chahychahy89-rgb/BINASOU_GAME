@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Binasou Mining</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
@@ -10,40 +10,40 @@
 <body>
     <div class="app-container">
         <div class="header">
-            <div class="user-info">
-                <span class="username">Binasou Miner ⛏️</span>
-                <span class="rank" id="user-rank">رتبة: مبتدئ</span>
-            </div>
+            <span class="username">Binasou Miner ⛏️</span>
+            <span class="rank" id="user-rank">رتبة: مبتدئ</span>
         </div>
 
-        <div class="mining-section">
-            <div class="coin-display">
-                <img src="https://cdn-icons-png.flaticon.com/512/5434/5434687.png" class="coin-icon">
-                <h1 id="balance">0</h1>
-                <p>إجمالي العملات</p>
+        <div class="main-content">
+            <div class="coin-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/5434/5434687.png" class="coin-logo">
+                <div class="balance-wrapper">
+                    <h1 id="balance">0</h1>
+                    <p>عملة تعدين</p>
+                </div>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <span>الربح في الساعة</span>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <small>الربح/ساعة</small>
                     <strong>100</strong>
                 </div>
-                <div class="stat-box">
-                    <span>نسبة الإنجاز</span>
+                <div class="stat-item">
+                    <small>الإنجاز</small>
                     <strong id="progress-text">0%</strong>
                 </div>
             </div>
 
-            <button id="adBtn" class="main-btn">
-                <span>⚡</span> ابدأ التعدين واكسب 100 عملة
+            <button id="adBtn" class="mining-button">
+                <span>⚡</span> ابدأ التعدين واكسب 100
             </button>
         </div>
 
-        <nav class="navbar">
-            <div class="nav-item active"><span>⛏️</span><small>تعدين</small></div>
-            <div class="nav-item"><span>📋</span><small>مهام</small></div>
-            <div class="nav-item"><span>👥</span><small>أصدقاء</small></div>
-            <div class="nav-item"><span>🏆</span><small>ترتيب</small></div>
+        <nav class="bottom-nav">
+            <div class="nav-btn active"><span>⛏️</span><small>تعدين</small></div>
+            <div class="nav-btn"><span>📋</span><small>مهام</small></div>
+            <div class="nav-btn"><span>👥</span><small>أصدقاء</small></div>
+            <div class="nav-btn"><span>🏆</span><small>ترتيب</small></div>
         </nav>
     </div>
     <script src="script.js"></script>
