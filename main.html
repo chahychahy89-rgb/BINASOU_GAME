@@ -1,0 +1,26 @@
+function show(id, el) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
+    }
+
+    function hit() {
+        bal += 100;
+        update();
+    }
+
+    function reward(a) {
+        bal += a;
+        update();
+        alert("مبروك! حصلت على المكافأة.");
+    }
+
+    function update() {
+        localStorage.setItem('user_bal_v3', bal);
+        scoreEl.innerText = bal.toLocaleString();
+    }
+</script>
+
+</body>
+</html>
