@@ -1,32 +1,83 @@
-document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-btn'));
-            document.getElementById(pageId).classList.add('active');
-            document.getElementById(btnId).classList.add('active-btn');
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BINASOU GOLD</title>
+    <style>
+        /* التنسيقات الأساسية فقط لضمان الاستقرار */
+        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { padding: 20px; font-size: 40px; color: #ffae00; font-weight: bold; }
+        
+        /* منطقة النقر */
+        .tap-area { height: 60vh; display: flex; align-items: center; justify-content: center; }
+        .coin { width: 200px; height: 200px; border: 8px solid #ffae00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #111; box-shadow: 0 0 20px #ffae00; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .coin:active { transform: scale(0.95); }
+
+        /* القائمة السفلية بشكل بسيط جداً */
+        .footer { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; border-top: 1px solid #333; height: 60px; }
+        .footer-btn { flex: 1; border: none; background: none; color: #777; font-size: 14px; cursor: pointer; }
+        .footer-btn.active { color: #ffae00; font-weight: bold; }
+
+        /* الأقسام الأخرى */
+        .section { display: none; padding: 20px; }
+        .show { display: block; }
+    </style>
+</head>
+<body>
+
+    <div id="score" class="header">0</div>
+
+    <div id="miningPage" class="section show">
+        <div class="tap-area">
+            <div class="coin" id="coinBtn">Binasou</div>
+        </div>
+    </div>
+
+    <div id="tasksPage" class="section">
+        <h2>المهام 📋</h2>
+        <div style="background:#1a1a1a; padding:15px; border-radius:10px; margin:10px;">
+            انضم للقناة (+5,000)
+            <button onclick="window.open('https://t.me/your_channel')" style="background:#ffae00; border:none; padding:5px 10px; border-radius:5px; float:left;">انضم</button>
+        </div>
+    </div>
+
+    <div id="friendsPage" class="section">
+        <h2>الأصدقاء 👥</h2>
+        <p>سيتم تفعيل نظام الإحالة قريباً!</p>
+    </div>
+
+    <div class="footer">
+        <button class="footer-btn" onclick="openSection('friendsPage')">الأصدقاء</button>
+        <button class="footer-btn active" id="mTab" onclick="openSection('miningPage')">تعدين</button>
+        <button class="footer-btn" onclick="openSection('tasksPage')">المهام</button>
+    </div>
+
+    <script>
+        // نظام حفظ الرصيد بأبسط صورة
+        let balance = parseInt(localStorage.getItem('bina_gold_final')) || 0;
+        const scoreDiv = document.getElementById('score');
+
+        function updateDisplay() {
+            scoreDiv.innerText = balance.toLocaleString();
+            localStorage.setItem('bina_gold_final', balance);
         }
 
-        // النقر
-        document.getElementById('tapBtn').addEventListener('touchstart', (e) => {
+        // التبديل بين الصفحات
+        function openSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+            document.getElementById(id).classList.add('show');
+        }
+
+        // النقر (TouchStart أسرع وأكثر استقراراً على الموبايل)
+        document.getElementById('coinBtn').addEventListener('touchstart', function(e) {
             e.preventDefault();
-            score += 1;
-            updateScore();
+            balance++;
+            updateDisplay();
         });
 
-        // المهام
-        function doTask(url, reward) {
-            window.open(url, '_blank');
-            setTimeout(() => { score += reward; updateScore(); alert('تمت الإضافة!'); }, 3000);
-        }
-
-        function shareRef() {
-            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=العب معي!");
-        }
-
-        // إعلانات
-        const ad = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
-        function showAd() {
-            if(ad) ad.show().then(() => { score += 1000; updateScore(); }).catch(() => {});
-        }
-
-        updateScore();
+        // تشغيل العرض عند البدء
+        updateDisplay();
     </script>
 </body>
 </html>
