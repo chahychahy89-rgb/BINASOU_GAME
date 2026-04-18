@@ -1,51 +1,31 @@
-<div class="nav-bar">
-        <button class="nav-btn" onclick="move('friends-page', this)">👥<span>الأصدقاء</span></button>
-        <button class="nav-btn active-nav" onclick="move('mining-page', this)">⛏️<span>تعدين</span></button>
-        <button class="nav-btn" onclick="move('tasks-page', this)">📋<span>المهام</span></button>
+<div class="task-card" style="flex-direction: column; text-align: center; gap: 20px;">
+            <p style="font-size: 16px;">شارك الرابط واحصل على مكافأة قدرها <br><span style="color:var(--gold); font-size:22px; font-weight:bold;">2,500 💰</span></p>
+            <button class="btn-action" style="width: 100%; padding: 15px;" onclick="invite()">إرسال رابط الدعوة 🚀</button>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="show('friends-page', this)">👥<span>الأصدقاء</span></button>
+        <button class="nav-btn active-nav" onclick="show('mining-page', this)">⛏️<span>تعدين</span></button>
+        <button class="nav-btn" onclick="show('tasks-page', this)">📋<span>المهام</span></button>
     </div>
 
     <script>
-        // --- 1. نظام الحفظ والرصيد ---
-        let score = parseInt(localStorage.getItem('binasou_final_save')) || 0;
-        const balDisplay = document.getElementById('balance');
+        // --- الأساسيات والحفظ (من الكود الخاص بك) ---
+        let score = parseInt(localStorage.getItem('binasou_score')) || 0;
+        const balanceDisplay = document.getElementById('balance');
 
-        function refresh() {
-            balDisplay.innerText = score.toLocaleString();
-            localStorage.setItem('binasou_final_save', score);
+        function update() {
+            balanceDisplay.innerText = score.toLocaleString();
+            localStorage.setItem('binasou_score', score);
         }
 
-        // --- 2. نظام التنقل ---
-        function move(id, btn) {
+        // --- وظيفة التنقل بين الصفحات ---
+        function show(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active-nav');
         }
 
-        // --- 3. نظام النقر (التعدين) ---
-        document.getElementById('tap-target').addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            score++;
-            refresh();
-        });
-
-        // --- 4. نظام المهام (الجوائز) ---
-        function giveReward(amt) {
-            setTimeout(() => {
-                score += amt;
-                refresh();
-                alert('تمت إضافة الجائزة بنجاح! 🎉');
-            }, 2500);
-        }
-
-        // --- 5. نظام الإحالة (تليجرام) ---
-        function shareRef() {
-            const url = "https://t.me/binasou_win_bot";
-            const msg = encodeURIComponent("انضم إليّ في BINASOU واجمع الذهب! ⛏️💰");
-            window.open(https://t.me/share/url?url=${url}&text=${msg});
-        }
-
-        refresh();
-    </script>
-</body>
-</html>
+        // --- نظام النقر (التعدين) ---
