@@ -1,97 +1,53 @@
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    background-color: #000;
-    color: #fff;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+    background-color: #0b0b0b;
+    color: white;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
+    height: 100vh;
     overflow: hidden;
 }
-
 .app-container {
     width: 100%;
-    max-width: 500px;
-    height: 100vh;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     padding: 20px;
     position: relative;
 }
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #222;
+.coin-logo {
+    width: 100px;
+    margin: 20px auto;
+    display: block;
+    filter: drop-shadow(0 0 10px #ffb400);
 }
-
-.rank { color: #ffb400; font-weight: bold; }
-
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* يضع المحتوى في المنتصف تماماً */
-}
-
-.coin-card { text-align: center; margin-bottom: 20px; }
-.coin-logo { 
-    width: 100px; 
-    height: 100px; 
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 15px #ffb400);
-}
-
-#balance { font-size: 50px; margin: 0; color: #ffb400; }
-
-.stats-container {
-    display: flex;
-    width: 100%;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.stat-item {
-    flex: 1;
-    background: #111;
-    padding: 15px;
-    border-radius: 12px;
+#balance {
+    font-size: 45px;
     text-align: center;
-    border: 1px solid #333;
+    color: #ffb400;
+    margin: 10px 0;
 }
-
-.stat-item small { color: #888; display: block; margin-bottom: 5px; }
-
 .mining-button {
-    width: 100%;
     background: linear-gradient(90deg, #ffb400, #ff8c00);
     border: none;
-    padding: 20px;
-    border-radius: 15px;
+    padding: 15px;
+    border-radius: 12px;
     color: #000;
     font-size: 18px;
     font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 180, 0, 0.3);
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 80px; /* ليرتفع عن البار السفلي */
 }
-
 .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: #000;
-    padding: 15px 0;
-    border-top: 1px solid #222;
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background: #111;
+    border-top: 1px solid #222;
 }
-
-.nav-btn { text-align: center; color: #555; cursor: pointer; }
-.nav-btn.active { color: #ffb400; }
-.nav-btn span { display: block; font-size: 20px; }
