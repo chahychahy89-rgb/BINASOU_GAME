@@ -42,14 +42,38 @@
     </div>
 
     <script>
-        let count = 2900;
-        function add() { count += 100; document.getElementById('s').innerText = count.toLocaleString(); }
-        function tab(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-        }
+     // كود اللعبة الأصلي
+    let count = 2900;
+    function add() {
+        count += 100;
+        document.getElementById('ts').innerText = count.toLocaleString();
+    }
+    
+    function tab(id, el) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
+    }
+
+    // --- كود إعلانات Adsgram الجديد ---
+    const AdController = window.Adsgram.init({ blockId: "int-28086" });
+
+    function showAd() {
+        AdController.show().then((result) => {
+            // مكافأة اختيارية عند مشاهدة الإعلان كاملاً
+            count += 500; 
+            document.getElementById('ts').innerText = count.toLocaleString();
+            console.log("Ad watched successfully");
+        }).catch((result) => {
+            console.error("Ad error:", result);
+        });
+    }
+
+    // تشغيل الإعلان تلقائياً عند فتح اللعبة بعد ثانيتين
+    window.onload = function() {
+        setTimeout(showAd, 2000);
+    }; 
     </script>
 </body>
 </html>
