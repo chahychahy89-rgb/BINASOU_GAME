@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Mining</title>
-    <link rel="stylesheet" href="style.css?v=20">
+    <title>Binasou Mining Official</title>
+    <link rel="stylesheet" href="style.css?v=50">
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <style>
-        /* كود الصورة مدمج هنا لضمان الظهور */
-        .binasou-logo-fixed {
-            width: 130px !important;
-            height: 130px !important;
+        .binasou-main-logo {
+            width: 140px !important;
+            height: 140px !important;
             border-radius: 50% !important;
             object-fit: cover !important;
             border: 4px solid #ffb400 !important;
-            margin: 10px auto !important;
+            margin: 15px auto !important;
             display: block !important;
-            box-shadow: 0 0 20px rgba(255, 180, 0, 0.6) !important;
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.7) !important;
+            background-color: #000;
+        }
+        .balance-glow {
+            color: #ffb400;
+            text-shadow: 0 0 15px rgba(255, 180, 0, 0.5);
+            font-size: 3rem;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -29,10 +35,10 @@
 
         <div class="main-content">
             <div class="coin-card">
-                <img src="https://ui-avatars.com/api/?name=Binasou+4&background=ffb400&color=000&size=128&bold=true&rounded=true" class="binasou-logo-fixed">
+                <img src="https://raw.githubusercontent.com/chahychahy89-rgb/BINASOU_GAME/main/1000050825.jpg" class="binasou-main-logo" onerror="this.src='https://ui-avatars.com/api/?name=B4&background=ffb400&color=000'">
                 
                 <div class="balance-wrapper">
-                    <h1 id="balance">0</h1>
+                    <h1 id="balance" class="balance-glow">2,000</h1>
                     <p>عملة تعدين</p>
                 </div>
             </div>
@@ -56,19 +62,18 @@
     </div>
 
     <script>
-        // نظام حفظ الرصيد الاحترافي
         let balance = parseInt(localStorage.getItem('user_coins')) || 2000;
         document.getElementById('balance').innerText = balance.toLocaleString();
 
         function startMining() {
             const btn = document.getElementById('adBtn');
-            btn.innerText = "جاري التحقق...";
+            btn.innerHTML = "<span>⏳</span> جاري التحميل...";
             
             if (window.Adsgram) {
                 const AdController = window.Adsgram.init({ blockId: "28072" });
                 AdController.show().then(() => { addCoins(); }).catch(() => { addCoins(); });
             } else {
-                addCoins();
+                setTimeout(addCoins, 1000); 
             }
         }
 
@@ -76,7 +81,7 @@
             balance += 100;
             localStorage.setItem('user_coins', balance);
             document.getElementById('balance').innerText = balance.toLocaleString();
-            document.getElementById('adBtn').innerText = "⚡ ابدأ التعدين واكسب 100";
+            document.getElementById('adBtn').innerHTML = "<span>⚡</span> ابدأ التعدين واكسب 100";
             updateRank();
         }
 
