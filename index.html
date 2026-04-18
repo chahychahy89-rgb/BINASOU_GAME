@@ -1,38 +1,64 @@
-function refresh() {
-            balDisplay.innerText = gold.toLocaleString();
-            localStorage.setItem('user_gold', gold);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINASOU GAME</title>
+    <style>
+        body { background: #000; color: #fff; text-align: center; margin: 0; font-family: sans-serif; }
+        .header { height: 80px; border-bottom: 2px solid #ffae00; display: flex; align-items: center; justify-content: center; }
+        #balance { font-size: 40px; color: #ffae00; font-weight: bold; }
+        .page { display: none; padding: 20px; height: 70vh; }
+        .active { display: block !important; }
+        .tap-btn { width: 200px; height: 200px; border: 8px solid #ffae00; border-radius: 50%; margin: 50px auto; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #111; cursor: pointer; user-select: none; }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; height: 70px; border-top: 1px solid #333; }
+        .nav button { flex: 1; background: none; color: #fff; border: none; font-size: 16px; }
+        .nav .active-btn { color: #ffae00; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div id="balance">0</div>
+    </div>
+
+    <div id="mine" class="page active">
+        <div class="tap-btn" id="tapper">BINASOU</div>
+    </div>
+
+    <div id="tasks" class="page">
+        <h2 style="color:#ffae00">المهام</h2>
+        <p>قريباً.. نفذ المهام لتربح المزيد</p>
+    </div>
+
+    <div class="nav">
+        <button onclick="showPage('tasks', this)">المهام</button>
+        <button class="active-btn" onclick="showPage('mine', this)">تعدين</button>
+    </div>
+
+    <script>
+        // هذا الجزء هو الذي كان يظهر كخلفية سوداء في صورتك
+        let points = parseInt(localStorage.getItem('points')) || 0;
+        const balEl = document.getElementById('balance');
+
+        function update() {
+            balEl.innerText = points.toLocaleString();
+            localStorage.setItem('points', points);
         }
 
-        // إصلاح تبديل الصفحات
-        function switchPage(pId, btn) {
+        function showPage(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('nav-active'));
-            document.getElementById(pId).classList.add('active');
-            btn.classList.add('nav-active');
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-btn'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active-btn');
         }
 
-        // تفعيل النقر
-        document.getElementById('tap-zone').onclick = function() {
-            gold++;
-            refresh();
+        document.getElementById('tapper').onclick = function() {
+            points++;
+            update();
         };
 
-        // تفعيل جوائز المهام
-        function getPrize(amount) {
-            setTimeout(() => {
-                gold += amount;
-                refresh();
-                alert('مبروك! تم استلام ' + amount + ' نقطة 🎉');
-            }, 2000);
-        }
-
-        // تفعيل الإحالة
-        function invite() {
-            const url = "https://t.me/binasou_win_bot";
-            window.open(https://t.me/share/url?url=${url}&text=العب واجمع الذهب مع BINASOU!);
-        }
-
-        refresh();
+        update();
     </script>
 </body>
 </html>
