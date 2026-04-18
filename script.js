@@ -1,42 +1,34 @@
-// 1. إعداد محرك الإعلانات باستخدام الرقم الخاص بكِ
-const AdController = window.Adsgram.init({ blockId: "28072" });
+let coins = parseInt(localStorage.getItem('user_coins')) || 2000;
+document.getElementById('balance').innerText = coins.toLocaleString();
 
-// 2. تحميل رصيد المستخدم المحفوظ (أو البدء من 0 إذا كان جديداً)
-let balance = parseInt(localStorage.getItem('user_coins')) || 0;
+function showPage(pageId, element) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    element.classList.add('active');
+}
 
-// تحديث الشاشة فور فتح اللعبة بالرصيد الحالي
-updateUI();
+function mine() {
+    coins += 100;
+    saveProgress();
+}
 
-// 3. الحصول على زر التعدين من الصفحة
-const adBtn = document.getElementById('adBtn');
+function openTask(url, reward) {
+    window.open(url, '_blank');
+    setTimeout(() => {
+        coins += reward;
+        saveProgress();
+        alert("تمت إضافة المكافأة! 🎉");
+    }, 3000);
+}
 
-// 4. ماذا يحدث عندما يضغط المستخدم على الزر؟
-adBtn.addEventListener('click', () => {
-    // تغيير نص الزر ليشعر المستخدم أن الإعلان يتم تحميله
-    adBtn.innerText = "جاري الاتصال بالمعدن...";
-    adBtn.disabled = true;
+function inviteFriend() {
+    const link = "https://t.me/binasou_win_bot";
+    const text = "انضم إلي في بوت Binasou وابدأ التعدين! 🚀";
+    window.open(https://t.me/share/url?url=${link}&text=${text});
+}
 
-    // طلب إظهار الإعلان من Adsgram
-    AdController.show().then((result) => {
-        // إذا شاهد المستخدم الإعلان كاملاً بنجاح
-        balance += 100; // إضافة 100 عملة
-        localStorage.setItem('user_coins', balance); // حفظ الرصيد في الجهاز
-        updateUI(); // تحديث الأرقام على الشاشة
-        alert("🎉 عمل رائع! كسبت 100 عملة تعدين.");
-    }).catch((result) => {
-        // إذا حدث خطأ (مثلاً لا يوجد إعلان متاح أو المنصة لم تُقبل بعد)
-        alert("التعدين غير متاح حالياً. يرجى الانتظار حتى يتم تفعيل حسابك في Adsgram.");
-        console.log("Adsgram Error:", result);
-    }).finally(() => {
-        // إعادة الزر لحالته الطبيعية بعد الانتهاء
-        adBtn.innerText = "ابدأ التعدين واكسب 100 عملة";
-        adBtn.disabled = false;
-    });
-});
-
-// 5. وظيفة تحديث واجهة المستخدم (تحديث الأرقام والرتبة)
-function updateUI() {
-    // عرض الرصيد بتنسيق جميل
-    document.getElementById('balance').innerText = balance.toLocaleString();
-    
-    // حساب نسبة التقدم (مثلاً كل
+function saveProgress() {
+    localStorage.setItem('user_coins', coins);
+    document.getElementById('balance').innerText = coins.toLocaleString();
+}
