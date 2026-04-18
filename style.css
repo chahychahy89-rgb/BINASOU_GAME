@@ -16,11 +16,11 @@ body {
     padding: 20px;
     position: relative;
 }
-.coin-logo {
-   .binasou-logo-fixed {
-    width: 130px !important;
-    height: 130px !important;
-    border-radius: 50% !important; /* لجعلها دائرية فخمة */
+.coin-logo 
+.binasou-logo-fixed {
+    width: 120px !important;
+    height: 120px !important;
+    border-radius: 50% !important; /* لجعل شعار الجروب دائرياً */
     object-fit: cover !important;
     border: 3px solid #ffb400 !important; /* إطار ذهبي */
     margin: 20px auto !important;
