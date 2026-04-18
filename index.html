@@ -1,58 +1,49 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BINASOU GOLD OFFICIAL</title>
-    <script src="https://adsgram.ai/js/adsgram-ad-sdk.js"></script>
-    <style>
-        :root { --gold: #ffae00; --bg: #0b0b0b; --card: #1a1a1a; }
-        body { background-color: var(--bg); color: #fff; font-family: sans-serif; margin: 0; padding: 0; overflow: hidden; -webkit-tap-highlight-color: transparent; }
-        
-        /* تنصيق الصفحات */
-        .page { display: none; flex-direction: column; align-items: center; justify-content: flex-start; height: 100vh; padding: 20px; box-sizing: border-box; }
-        .active-page { display: flex; }
-        
-        .score-header { font-size: 40px; font-weight: bold; color: var(--gold); margin: 20px 0; }
+<script>
+        let score = parseInt(localStorage.getItem('bina_gold')) || 0;
+        const balDisp = document.getElementById('balance');
 
-        /* صفحة التعدين */
-        .mining-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .circle { width: 240px; height: 240px; border: 10px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; background: radial-gradient(circle, #222, #000); box-shadow: 0 0 40px var(--gold); transition: transform 0.05s; user-select: none; }
-        .circle:active { transform: scale(0.92); }
+        function updateUI() {
+            balDisp.innerText = score.toLocaleString();
+            localStorage.setItem('bina_gold', score);
+        }
 
-        /* البطاقات للمهام والأصدقاء */
-        .task-card { background: var(--card); width: 100%; max-width: 400px; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid var(--gold); }
-        .btn-action { background: var(--gold); color: #000; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        function go(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active-page');
+            if(id === 'friendsPage') document.getElementById('navF').classList.add('active');
+            if(id === 'miningPage') document.getElementById('navM').classList.add('active');
+            if(id === 'tasksPage') document.getElementById('navT').classList.add('active');
+        }
 
-        /* القائمة السفلية */
-        .footer { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #151515; padding: 15px 0; border-top: 1px solid #333; }
-        .footer button { background: none; border: none; color: #777; font-size: 14px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-        .footer button.active { color: var(--gold); font-weight: bold; }
-    </style>
-</head>
-<body>
+        // نظام النقر
+        document.getElementById('tapBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            score += 1;
+            updateUI();
+        });
 
-    <div id="miningPage" class="page active-page">
-        <h1 style="color: var(--gold); margin-top: 0;">BINASOU GOLD ⛏️</h1>
-        <div class="mining-container">
-            <div class="score-header" id="ts">0</div>
-            <div class="circle" id="tapArea">Binasou</div>
-        </div>
-    </div>
+        // نظام المهام
+        function completeTask(url, reward) {
+            window.open(url, '_blank');
+            setTimeout(() => {
+                score += reward;
+                updateUI();
+                alert('تم إضافة المكافأة بنجاح!');
+            }, 4000);
+        }
 
-    <div id="tasksPage" class="page">
-        <h1>المهام اليومية 📋</h1>
-        <div class="task-card">
-            <div><strong>انضم لقناتنا</strong><br><small>+5,000 قطعة</small></div>
-            <button class="btn-action" onclick="finishTask('https://t.me/your_channel', 5000)">انضم</button>
-        </div>
-        <div class="task-card">
-            <div><strong>شاهد إعلان</strong><br><small>+1,000 قطعة</small></div>
-            <button class="btn-action" onclick="runAd()">شاهد</button>
-        </div>
-    </div>
+        // نظام الإعلانات
+        const ads = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+        function showAd() {
+            if(ads) ads.show().then(() => { score += 1000; updateUI(); }).catch(() => alert('الإعلان غير متوفر'));
+        }
 
-    <div id="friendsPage" class="page">
-        <h1>نظام الإحالة 👥</h1>
-        <div class="task-card" style="flex-direction: column; text-align: center; gap: 15px;">
-            <p>ادعُ أصدقاءك واحصل على مكافأة عن كل صديق ينضم!</p>
+        function shareRef() {
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=العب معي BINASOU واجمع الذهب!");
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
