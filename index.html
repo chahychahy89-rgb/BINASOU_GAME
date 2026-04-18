@@ -3,100 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Miner Gold</title>
+    <title>Binasou Gold Game</title>
     <style>
-        /* التنسيق الأساسي لمنع اختفاء العناصر */
-        body { 
-            background-color: #000 !important; 
-            color: #fff; 
-            font-family: sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-        }
-        .container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        
-        /* دائرة Binasou الذهبية المضيئة */
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        .page { display: none; flex: 1; padding: 20px; text-align: center; overflow-y: auto; }
+        .page.active { display: block; }
+
+        /* دائرة Binasou */
         .gold-circle { 
-            width: 160px; 
-            height: 160px; 
-            border-radius: 50%; 
-            border: 5px solid #ffb400; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 2.2rem; 
-            font-weight: bold; 
-            color: #ffb400; 
-            text-shadow: 0 0 15px #ffb400; 
-            box-shadow: 0 0 30px rgba(255, 180, 0, 0.5);
-            background: #111;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .gold-circle:active { transform: scale(0.95); }
-
-        .balance-text { color: #ffb400; font-size: 4rem; font-weight: bold; margin: 10px 0; }
-        .main-button { 
-            background: #ffb400; 
-            color: #000; 
-            border: none; 
-            padding: 18px 40px; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            font-size: 1.2rem; 
-            cursor: pointer;
-            width: 85%;
+            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #ffb400; 
+            margin: 30px auto; display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; font-weight: bold; color: #ffb400; text-shadow: 0 0 15px #ffb400;
+            box-shadow: 0 0 25px rgba(255,180,0,0.4); background: #000; cursor: pointer;
         }
 
-        /* القائمة السفلية */
-        .nav-footer { 
-            background: #111; 
-            display: flex; 
-            width: 100%; 
-            padding: 15px 0; 
-            border-top: 1px solid #222; 
-        }
-        .nav-btn { flex: 1; text-align: center; color: #555; font-size: 0.9rem; cursor: pointer; }
-        .nav-btn.active { color: #ffb400; font-weight: bold; }
+        .balance { font-size: 4rem; font-weight: bold; color: #ffb400; margin: 10px 0; }
+        .btn-main { background: #ffb400; color: #000; border: none; padding: 18px; border-radius: 12px; font-weight: bold; width: 90%; font-size: 1.2rem; cursor: pointer; }
+        
+        /* تصميم المهام والأصدقاء */
+        .card { background: #111; border: 1px solid #222; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-sm { background: #ffb400; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* القائمة السفلية المفعّلة */
+        .nav { background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
+        .nav-item { color: #555; text-align: center; cursor: pointer; font-size: 0.8rem; flex: 1; }
+        .nav-item.active { color: #ffb400; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div style="width: 100%; display: flex; justify-content: space-between; color: #ffb400; font-size: 0.8rem; margin-bottom: 20px;">
-            <span>⛏️ Binasou Miner</span>
+    <div id="p1" class="page active">
+        <div style="display:flex; justify-content: space-between; color:#ffb400; font-size: 0.8rem;">
+            <span>Binasou Miner ⛏️</span>
             <span>رتبة: محترف 🚀</span>
         </div>
-
-        <div class="gold-circle" id="circle" onclick="addMoney()">Binasou</div>
-
-        <div class="balance-text" id="score-val">2,100</div>
-        <p style="color: #888;">عملة تعدين</p>
-
-        <button class="main-button" onclick="addMoney()">⚡ ابدأ التعدين واكسب 100</button>
+        <div class="gold-circle" onclick="mine()">Binasou</div>
+        <div class="balance" id="bal">2,200</div>
+        <p style="color:#888;">عملة تعدين</p>
+        <button class="btn-main" onclick="mine()">⚡ ابدأ التعدين واكسب 100</button>
     </div>
 
-    <div class="nav-footer">
-        <div class="nav-btn active">⛏️<br>تعدين</div>
-        <div class="nav-btn" onclick="alert('قريباً!')">📋<br>مهام</div>
-        <div class="nav-btn" onclick="alert('قريباً!')">👥<br>أصدقاء</div>
-    </div>
-
-    <script>
-        // حفظ الرصيد
-        let score = parseInt(localStorage.getItem('b_score')) || 2100;
-        const display = document.getElementById('score-val');
-        display.innerText = score.toLocaleString();
-
-        function addMoney() {
-            score += 100;
-            display.innerText = score.toLocaleString();
-            localStorage.setItem('b_score', score);
-        }
-    </script>
-</body>
-</html>
+    <div id="p2" class="page">
+        <h2 style="color:#ffb400">
