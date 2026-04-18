@@ -1,0 +1,40 @@
+if (angle > 340 || angle < 20) {
+            score += 10;
+            speed += 0.2;
+            scoreDisplay.innerText = score;
+            updateRank();
+            tg.HapticFeedback.impactOccurred('light');
+        } else {
+            tg.HapticFeedback.notificationOccurred('error');
+            alert("حاول مرة أخرى! نقاطك الحالية محفوظة.");
+            speed = 3;
+        }
+    }
+
+    function updateRank() {
+        const rank = document.getElementById('userRank');
+        if (score > 5000) rank.innerText = "Binasou Legend 🏆";
+        else if (score > 1000) rank.innerText = "Binasou Warrior ⚔️";
+    }
+
+    function connectWallet() {
+        const addr = prompt("أدخل عنوان USDT (BEP20) من بايننس:");
+        if(addr) { 
+            localStorage.setItem('wallet', addr);
+            alert("تم الربط! سيتم مراجعة نقاطك في نهاية الأسبوع.");
+        }
+    }
+
+    function share() {
+        tg.shareUrl("https://t.me/YourBotName", "أنا أجمع النقاط في Binasou! هل يمكنك هزيمتي؟");
+    }
+
+    const AdController = window.Adsgram.init({ blockId: "YOUR_BLOCK_ID" });
+    function watchAd() {
+        AdController.show().then(() => { score += 100; scoreDisplay.innerText = score; });
+    }
+
+    move();
+</script>
+</body>
+</html>
