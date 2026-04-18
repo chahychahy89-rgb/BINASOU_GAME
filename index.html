@@ -1,96 +1,24 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Mining Official</title>
-    <link rel="stylesheet" href="style.css?v=50">
-    <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
-    <style>
-        .binasou-main-logo {
-            width: 140px !important;
-            height: 140px !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
-            border: 4px solid #ffb400 !important;
-            margin: 15px auto !important;
-            display: block !important;
-            box-shadow: 0 0 25px rgba(255, 180, 0, 0.7) !important;
-            background-color: #000;
-        }
-        .balance-glow {
-            color: #ffb400;
-            text-shadow: 0 0 15px rgba(255, 180, 0, 0.5);
-            font-size: 3rem;
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <div class="header">
-            <span class="username">Binasou Miner ⛏️</span>
-            <span class="rank" id="user-rank">رتبة: محترف 🚀</span>
-        </div>
-
-        <div class="main-content">
-            <div class="coin-card">
-                <img src="https://raw.githubusercontent.com/chahychahy89-rgb/BINASOU_GAME/main/1000050825.jpg" class="binasou-main-logo" onerror="this.src='https://ui-avatars.com/api/?name=B4&background=ffb400&color=000'">
-                
-                <div class="balance-wrapper">
-                    <h1 id="balance" class="balance-glow">2,000</h1>
-                    <p>عملة تعدين</p>
-                </div>
-            </div>
-
-            <div class="stats-container">
-                <div class="stat-item"><small>الربح/ساعة</small><strong>100</strong></div>
-                <div class="stat-item"><small>الإنجاز</small><strong id="progress-text">100%</strong></div>
-            </div>
-
-            <button id="adBtn" class="mining-button" onclick="startMining()">
-                <span>⚡</span> ابدأ التعدين واكسب 100
-            </button>
-        </div>
-
-        <nav class="bottom-nav">
-            <div class="nav-btn active"><span>⛏️</span><small>تعدين</small></div>
-            <div class="nav-btn"><span>📋</span><small>مهام</small></div>
-            <div class="nav-btn"><span>👥</span><small>أصدقاء</small></div>
-            <div class="nav-btn"><span>🏆</span><small>ترتيب</small></div>
-        </nav>
-    </div>
-
-    <script>
-        let balance = parseInt(localStorage.getItem('user_coins')) || 2000;
-        document.getElementById('balance').innerText = balance.toLocaleString();
-
-        function startMining() {
-            const btn = document.getElementById('adBtn');
-            btn.innerHTML = "<span>⏳</span> جاري التحميل...";
-            
-            if (window.Adsgram) {
-                const AdController = window.Adsgram.init({ blockId: "28072" });
-                AdController.show().then(() => { addCoins(); }).catch(() => { addCoins(); });
-            } else {
-                setTimeout(addCoins, 1000); 
-            }
+function doTask(reward, link) {
+            window.open(link, '_blank');
+            setTimeout(() => {
+                balance += reward;
+                updateUI();
+                alert("تهانينا! حصلت على " + reward + " عملة");
+            }, 2000);
         }
 
-        function addCoins() {
-            balance += 100;
+        function shareGame() {
+            const url = "https://t.me/binasou_win_bot";
+            const text = "انضم إلي في بوت تعدين Binasou واكسب العملات مجاناً! 🚀";
+            window.open(https://t.me/share/url?url=${url}&text=${text});
+        }
+
+        function updateUI() {
             localStorage.setItem('user_coins', balance);
             document.getElementById('balance').innerText = balance.toLocaleString();
-            document.getElementById('adBtn').innerHTML = "<span>⚡</span> ابدأ التعدين واكسب 100";
-            updateRank();
         }
 
-        function updateRank() {
-            const rankEl = document.getElementById('user-rank');
-            if(balance >= 1000) rankEl.innerText = "رتبة: محترف 🚀";
-            if(balance >= 5000) rankEl.innerText = "رتبة: أسطورة 🔥";
-        }
-        updateRank();
+        // كود التعدين السابق كما هو...
     </script>
 </body>
 </html>
