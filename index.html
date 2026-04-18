@@ -1,7 +1,57 @@
-<div style="background: #141414; padding: 16px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid #ffae00; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-    <div style="text-align: right;">
-        <b style="display: block; font-size: 16px; color: #fff; margin-bottom: 4px;">قناة التليجرام الرسمي</b>
-        <span style="color: #ffae00; font-weight: bold; font-size: 14px;">+2,000 💰</span>
+<div class="task-card" style="flex-direction: column; text-align: center; gap: 20px;">
+            <p style="font-size: 16px;">شارك الرابط واحصل على مكافأة فورية قدرها <br><span style="color:var(--gold); font-size:20px; font-weight:bold;">2,500 💰</span></p>
+            <button class="btn-action" style="width: 100%;" onclick="shareInvite()">إرسال رابط الدعوة 🚀</button>
+        </div>
     </div>
-    <a href="https://t.me/binasou4" target="_blank" onclick="gift(2000)" style="background: #ffae00; color: #000; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s;">انضم الآن</a>
-</div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="navigation('friends-page', this)">👥<span>الأصدقاء</span></button>
+        <button class="nav-btn active-nav" onclick="navigation('mining-page', this)">⛏️<span>تعدين</span></button>
+        <button class="nav-btn" onclick="navigation('tasks-page', this)">📋<span>المهام</span></button>
+    </div>
+
+    <script>
+        // 1. نظام الرصيد والحفظ
+        let score = parseInt(localStorage.getItem('binasou_total_score')) || 0;
+        const scoreDisplay = document.getElementById('balance');
+
+        function refreshData() {
+            scoreDisplay.innerText = score.toLocaleString();
+            localStorage.setItem('binasou_total_score', score);
+        }
+
+        // 2. نظام التنقل بين الصفحات
+        function navigation(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+            document.getElementById(pageId).classList.add('active');
+            btn.classList.add('active-nav');
+        }
+
+        // 3. نظام النقر (التعدين)
+        document.getElementById('tap-target').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            score += 1;
+            refreshData();
+        });
+
+        // 4. نظام المكافآت (المهام)
+        function giveReward(amount) {
+            setTimeout(() => {
+                score += amount;
+                refreshData();
+                alert('مبروك! تمت إضافة الجائزة بنجاح 🎉');
+            }, 2000);
+        }
+
+        // 5. نظام الإحالة (تليجرام)
+        function shareInvite() {
+            const botLink = "https://t.me/binasou_win_bot";
+            const message = encodeURIComponent("العب معي في BINASOU واجمع الذهب! ⛏️💰");
+            window.open(https://t.me/share/url?url=${botLink}&text=${message});
+        }
+
+        refreshData();
+    </script>
+</body>
+</html>
