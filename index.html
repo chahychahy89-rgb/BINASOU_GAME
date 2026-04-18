@@ -1,68 +1,62 @@
 <div class="footer">
-        <button id="btnFriends" onclick="showPage('friendsPage')"><span>👥 الأصدقاء</span></button>
-        <button id="btnMining" class="active" onclick="showPage('miningPage')"><span>⛏️ تعدين</span></button>
-        <button id="btnTasks" onclick="showPage('tasksPage')"><span>📋 المهام</span></button>
+        <button id="btnFriends" onclick="showPage('friendsPage')"><i>👥</i><span>الأصدقاء</span></button>
+        <button id="btnMining" class="active" onclick="showPage('miningPage')"><i>⛏️</i><span>تعدين</span></button>
+        <button id="btnTasks" onclick="showPage('tasksPage')"><i>📋</i><span>المهام</span></button>
     </div>
 
     <script>
-        let count = parseInt(localStorage.getItem('bina_total')) || 2900;
+        let count = parseInt(localStorage.getItem('bina_total')) || 2906;
         const scoreDisplay = document.getElementById('ts');
-        const visualCircle = document.getElementById('visualCircle');
+        const topScore = document.getElementById('topScore');
 
-        // تحديث الواجهة
         function updateUI() {
-            scoreDisplay.innerText = count.toLocaleString();
+            const formatted = count.toLocaleString();
+            scoreDisplay.innerText = formatted;
+            topScore.innerText = formatted;
             localStorage.setItem('bina_total', count);
         }
 
-        // نظام التنقل
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.querySelectorAll('.footer button').forEach(b => b.classList.remove('active'));
-            
             document.getElementById(pageId).classList.add('active-page');
+            
             if(pageId === 'miningPage') document.getElementById('btnMining').classList.add('active');
             if(pageId === 'tasksPage') document.getElementById('btnTasks').classList.add('active');
             if(pageId === 'friendsPage') document.getElementById('btnFriends').classList.add('active');
         }
 
-        // نظام النقر
+        // معالجة النقر السريع
         document.getElementById('tapArea').addEventListener('touchstart', (e) => {
             e.preventDefault();
             count += 1;
             updateUI();
-            visualCircle.style.transform = "scale(0.92)";
-            setTimeout(() => visualCircle.style.transform = "scale(1)", 50);
         });
 
-        // نظام المهام
-        function doTask(type, reward) {
-            window.open('https://t.me/your_channel', '_blank'); // استبدل برابط قناتك
+        // تنفيذ المهام
+        function doTask(url, reward) {
+            window.open(url, '_blank');
             setTimeout(() => {
                 count += reward;
                 updateUI();
-                alert('تم إضافة المكافأة بنجاح!');
-            }, 2000);
+                alert('مبروك! تم إضافة المكافأة');
+            }, 3000);
         }
 
         // نظام الإعلانات
         const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
-        function showAdTask() {
+        function showRewardAd() {
             if (AdController) {
-                AdController.show().then(() => {
-                    count += 1000;
-                    updateUI();
-                    alert('أحسنت! حصلت على 1000 نقطة.');
-                }).catch(() => alert('عذراً، الإعلان غير متوفر حالياً.'));
-            }
+                AdController.show().then(() => { count += 1000; updateUI(); }).catch(() => {});
+            } else { alert('الإعلان غير جاهز بعد'); }
         }
 
-        function inviteFriend() {
-            const url = "https://t.me/binasou_win_bot?start=" + (Math.random()*1000).toFixed(0);
-            window.open(https://t.me/share/url?url=${url}&text=العب معي BINASOU واجمع الذهب!, '_blank');
+        function shareLink() {
+            const text = "العب معي واجمع الذهب في BINASOU!";
+            window.open(https://t.me/share/url?url=https://t.me/binasou_win_bot&text=${text});
         }
 
-        window.onload = updateUI;
+        updateUI();
     </script>
 </body>
 </html>
