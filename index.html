@@ -1,53 +1,22 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Mining Official</title>
-    <link rel="stylesheet" href="style.css?v=1.2">
-</head>
-<body>
-    <div class="app-container">
-        <div id="mining-page" class="page active">
-            <div class="header">
-                <span>⛏️ Binasou Miner</span>
-                <span id="rank-display">رتبة: محترف 🚀</span>
-            </div>
-            <div class="logo-container">
-                <div class="main-logo"></div>
-            </div>
-            <div class="balance-container">
-                <h1 id="balance">2,000</h1>
-                <p>عملة تعدين</p>
-            </div>
-            <button class="action-btn" onclick="mine()">⚡ ابدأ التعدين واكسب 100</button>
-        </div>
+function mineCoins() {
+            bal += 100;
+            save();
+        }
 
-        <div id="tasks-page" class="page">
-            <h2 class="gold-text">📋 المهام اليومية</h2>
-            <div class="task-item">
-                <div class="task-info">
-                    <span>انضم لقناة Binasou4</span>
-                    <small class="gold-text">+1,000 عملة</small>
-                </div>
-                <button class="task-btn" onclick="openTask('https://t.me/Binasou4', 1000)">تنفيذ</button>
-            </div>
-        </div>
+        function doTask(url, gift) {
+            window.open(url, '_blank');
+            setTimeout(() => { bal += gift; save(); alert("تمت الإضافة! 🎉"); }, 2000);
+        }
 
-        <div id="friends-page" class="page">
-            <h2 class="gold-text">👥 دعوة الأصدقاء</h2>
-            <div class="invite-card">
-                <p>شارك الرابط واكسب 2,000 عملة عن كل صديق!</p>
-                <button class="action-btn" onclick="inviteFriend()">🔗 إرسال الرابط</button>
-            </div>
-        </div>
+        function shareLink() {
+            const url = "https://t.me/binasou_win_bot";
+            window.open(https://t.me/share/url?url=${url}&text=تعال عدّن معي!);
+        }
 
-        <nav class="nav-bar">
-            <div class="nav-item active" onclick="showPage('mining-page', this)">⛏️<br><small>تعدين</small></div>
-            <div class="nav-item" onclick="showPage('tasks-page', this)">📋<br><small>مهام</small></div>
-            <div class="nav-item" onclick="showPage('friends-page', this)">👥<br><small>أصدقاء</small></div>
-        </nav>
-    </div>
-    <script src="script.js?v=1.2"></script>
+        function save() {
+            localStorage.setItem('user_coins', bal);
+            document.getElementById('coin-bal').innerText = bal.toLocaleString();
+        }
+    </script>
 </body>
 </html>
