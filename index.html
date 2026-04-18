@@ -1,83 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BINASOU GOLD</title>
     <style>
-        /* التنسيقات الأساسية فقط لضمان الاستقرار */
-        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 0; }
-        .header { padding: 20px; font-size: 40px; color: #ffae00; font-weight: bold; }
-        
-        /* منطقة النقر */
-        .tap-area { height: 60vh; display: flex; align-items: center; justify-content: center; }
-        .coin { width: 200px; height: 200px; border: 8px solid #ffae00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #111; box-shadow: 0 0 20px #ffae00; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
-        .coin:active { transform: scale(0.95); }
-
-        /* القائمة السفلية بشكل بسيط جداً */
-        .footer { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; border-top: 1px solid #333; height: 60px; }
-        .footer-btn { flex: 1; border: none; background: none; color: #777; font-size: 14px; cursor: pointer; }
-        .footer-btn.active { color: #ffae00; font-weight: bold; }
-
-        /* الأقسام الأخرى */
-        .section { display: none; padding: 20px; }
-        .show { display: block; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; text-align: center; overflow: hidden; }
+        .header { padding: 30px; font-size: 50px; color: #ffae00; font-weight: bold; }
+        .tap-zone { height: 65vh; display: flex; align-items: center; justify-content: center; }
+        .coin { width: 220px; height: 220px; border: 10px solid #ffae00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; background: radial-gradient(#222, #000); box-shadow: 0 0 30px #ffae00; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; transition: transform 0.05s; }
+        .coin:active { transform: scale(0.92); }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; border-top: 2px solid #222; height: 70px; }
+        .nav-btn { flex: 1; border: none; background: none; color: #666; font-size: 16px; cursor: pointer; }
+        .nav-btn.active { color: #ffae00; font-weight: bold; }
+        .screen { display: none; padding: 20px; }
+        .active-screen { display: block; }
     </style>
 </head>
 <body>
 
     <div id="score" class="header">0</div>
 
-    <div id="miningPage" class="section show">
-        <div class="tap-area">
-            <div class="coin" id="coinBtn">Binasou</div>
+    <div id="mPage" class="screen active-screen">
+        <div class="tap-zone">
+            <div class="coin" id="mainCoin">Binasou</div>
         </div>
     </div>
 
-    <div id="tasksPage" class="section">
-        <h2>المهام 📋</h2>
-        <div style="background:#1a1a1a; padding:15px; border-radius:10px; margin:10px;">
-            انضم للقناة (+5,000)
-            <button onclick="window.open('https://t.me/your_channel')" style="background:#ffae00; border:none; padding:5px 10px; border-radius:5px; float:left;">انضم</button>
+    <div id="tPage" class="screen">
+        <h2>المهام اليومية 📋</h2>
+        <div style="background:#1a1a1a; padding:20px; border-radius:15px; border-right:5px solid #ffae00;">
+            قناة التليجرام (+5,000)
+            <button onclick="window.open('https://t.me/your_channel')" style="background:#ffae00; border:none; padding:10px; border-radius:8px; float:left; font-weight:bold;">انضم</button>
         </div>
     </div>
 
-    <div id="friendsPage" class="section">
-        <h2>الأصدقاء 👥</h2>
-        <p>سيتم تفعيل نظام الإحالة قريباً!</p>
-    </div>
-
-    <div class="footer">
-        <button class="footer-btn" onclick="openSection('friendsPage')">الأصدقاء</button>
-        <button class="footer-btn active" id="mTab" onclick="openSection('miningPage')">تعدين</button>
-        <button class="footer-btn" onclick="openSection('tasksPage')">المهام</button>
+    <div class="nav">
+        <button class="nav-btn" onclick="show('tPage', this)">المهام</button>
+        <button class="nav-btn active" onclick="show('mPage', this)">تعدين</button>
+        <button class="nav-btn" onclick="alert('قريباً!')">الأصدقاء</button>
     </div>
 
     <script>
-        // نظام حفظ الرصيد بأبسط صورة
-        let balance = parseInt(localStorage.getItem('bina_gold_final')) || 0;
+        let balance = parseInt(localStorage.getItem('b_gold')) || 0;
         const scoreDiv = document.getElementById('score');
 
-        function updateDisplay() {
+        function update() {
             scoreDiv.innerText = balance.toLocaleString();
-            localStorage.setItem('bina_gold_final', balance);
+            localStorage.setItem('b_gold', balance);
         }
 
-        // التبديل بين الصفحات
-        function openSection(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
-            document.getElementById(id).classList.add('show');
+        function show(id, btn) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active-screen');
+            btn.classList.add('active');
         }
 
-        // النقر (TouchStart أسرع وأكثر استقراراً على الموبايل)
-        document.getElementById('coinBtn').addEventListener('touchstart', function(e) {
+        document.getElementById('mainCoin').addEventListener('touchstart', function(e) {
             e.preventDefault();
             balance++;
-            updateDisplay();
+            update();
         });
 
-        // تشغيل العرض عند البدء
-        updateDisplay();
+        update();
     </script>
 </body>
 </html>
