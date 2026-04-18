@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Miner Gold</title>
-    <style>
-        body { background: #000; color: #fff; margin: 0; font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        .main-container { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .page { display: none; width: 100%; text-align: center; }
-        .page.active { display: block; }
-        
-        /* دائرة التعدين */
-        .mining-circle { width: 180px; height: 180px; border: 5px solid #ffb400; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #ffb400; margin: 40px auto; cursor: pointer; background: rgba(255,180,0,0.1
+<script>
+    let currentBal = parseInt(localStorage.getItem('bin_val')) || 2500;
+    const scoreText = document.getElementById('userScore');
+    scoreText.innerText = currentBal.toLocaleString();
+
+    function tapGold() {
+        currentBal += 100;
+        refreshUI();
+    }
+
+    function getGift(amt) {
+        currentBal += amt;
+        refreshUI();
+        alert("تمت إضافة المكافأة بنجاح! 🎉");
+    }
+
+    function switchTab(pId, el) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(pId).classList.add('active');
+        el.classList.add('active');
+    }
+
+    function inviteFriend() {
+        // ضعي يوزر بوتك هنا بدلاً من B
