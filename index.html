@@ -1,62 +1,34 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Miner Final</title>
-    <style>
-        /* التنسيق الأساسي للمنصة */
-        body { 
-            background-color: #000 !important; 
-            color: #fff; 
-            font-family: sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden; 
-        }
+<script>
+    let score = parseInt(localStorage.getItem('saved_v')) || 2200;
+    const display = document.getElementById('main-score');
+    display.innerText = score.toLocaleString();
 
-        /* حاوية الصفحات - لضمان عدم تغطية الأزرار */
-        .content-area { flex: 1; overflow-y: auto; padding: 20px; text-align: center; padding-bottom: 80px; }
-        .page { display: none; }
-        .page.active { display: block; }
+    function switchTab(viewId, el) {
+        // إخفاء كل المشاهد
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        
+        // إظهار المشهد المختار
+        document.getElementById(viewId).classList.add('active');
+        el.classList.add('active');
+    }
 
-        /* دائرة Binasou الذهبية */
-        .gold-circle { 
-            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #ffb400; 
-            margin: 40px auto 20px; display: flex; align-items: center; justify-content: center;
-            font-size: 2.2rem; font-weight: bold; color: #ffb400; text-shadow: 0 0 15px #ffb400;
-            box-shadow: 0 0 25px rgba(255,180,0,0.4); background: #000; cursor: pointer;
-        }
-        .gold-circle:active { transform: scale(0.95); }
+    function tap() {
+        score += 100;
+        updateUI();
+    }
 
-        .balance-val { font-size: 4rem; font-weight: bold; color: #ffb400; margin: 10px 0; }
-        .main-btn { background: #ffb400; color: #000; border: none; padding: 20px; border-radius: 15px; font-weight: bold; width: 90%; font-size: 1.2rem; cursor: pointer; }
+    function addReward(amt) {
+        score += amt;
+        updateUI();
+        alert("مبروك! تم إضافة المكافأة.");
+    }
 
-        /* تصميم كروت المهام والأصدقاء */
-        .card { background: #111; border: 1px solid #222; padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .task-btn { background: #ffb400; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    function updateUI() {
+        localStorage.setItem('saved_v', score);
+        display.innerText = score.toLocaleString();
+    }
+</script>
 
-        /* القائمة السفلية - ثابتة لا تختفي أبداً */
-        .bottom-nav { 
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #111; display: flex; justify-content: space-around; 
-            padding: 12px 0; border-top: 2px solid #222; z-index: 9999;
-        }
-        .nav-item { color: #555; text-align: center; cursor: pointer; font-size: 0.85rem; flex: 1; transition: 0.3s; }
-        .nav-item.active { color: #ffb400; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <div class="content-area">
-        <div id="mining" class="page active">
-            <div style="display:flex; justify-content: space-between; color:#ffb400; font-size: 0.8rem; margin-bottom: 20px;">
-                <span>Binasou Miner ⛏️</span>
-                <span>رتبة: محترف 🚀</span>
-            </div>
-            <div class="gold-circle" onclick="mine()">Binasou</div>
-            <div class="balance-val" id="score">2,200</div>
-            <p style="color:#
+</body>
+</html>
