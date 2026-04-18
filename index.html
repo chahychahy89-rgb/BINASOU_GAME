@@ -70,10 +70,30 @@
         });
     }
 
-    // تشغيل الإعلان تلقائياً عند فتح اللعبة بعد ثانيتين
-    window.onload = function() {
-        setTimeout(showAd, 2000);
-    }; 
-    </script>
-</body>
-</html>
+  // --- كود إعلانات Adsgram الجديد ---
+// تأكد أن هذا الجزء يعمل فقط إذا كان المكتبة محملة
+const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+
+function showAd() {
+    if (AdController) {
+        AdController.show().then((result) => {
+            // مكافأة عند مشاهدة الإعلان كاملاً
+            count += 500;
+            const tsElement = document.getElementById('ts');
+            if (tsElement) tsElement.innerText = count.toLocaleString();
+            console.log("Ad watched successfully");
+        }).catch((result) => {
+            console.error("Ad error:", result);
+        });
+    } else {
+        console.log("Adsgram not loaded yet");
+    }
+}
+
+// تشغيل الإعلان بعد ثانيتين (اختياري)
+window.onload = function() {
+    setTimeout(() => {
+        // نتحقق أولاً هل الحساب مفعل أم لا لتجنب التعليق
+        showAd();
+    }, 2000);
+};
