@@ -1,42 +1,97 @@
-// 1. إعداد محرك الإعلانات باستخدام الرقم الخاص بكِ
-const AdController = window.Adsgram.init({ blockId: "28072" });
+* { box-sizing: border-box; }
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
 
-// 2. تحميل رصيد المستخدم المحفوظ (أو البدء من 0 إذا كان جديداً)
-let balance = parseInt(localStorage.getItem('user_coins')) || 0;
+.app-container {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+}
 
-// تحديث الشاشة فور فتح اللعبة بالرصيد الحالي
-updateUI();
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #222;
+}
 
-// 3. الحصول على زر التعدين من الصفحة
-const adBtn = document.getElementById('adBtn');
+.rank { color: #ffb400; font-weight: bold; }
 
-// 4. ماذا يحدث عندما يضغط المستخدم على الزر؟
-adBtn.addEventListener('click', () => {
-    // تغيير نص الزر ليشعر المستخدم أن الإعلان يتم تحميله
-    adBtn.innerText = "جاري الاتصال بالمعدن...";
-    adBtn.disabled = true;
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* يضع المحتوى في المنتصف تماماً */
+}
 
-    // طلب إظهار الإعلان من Adsgram
-    AdController.show().then((result) => {
-        // إذا شاهد المستخدم الإعلان كاملاً بنجاح
-        balance += 100; // إضافة 100 عملة
-        localStorage.setItem('user_coins', balance); // حفظ الرصيد في الجهاز
-        updateUI(); // تحديث الأرقام على الشاشة
-        alert("🎉 عمل رائع! كسبت 100 عملة تعدين.");
-    }).catch((result) => {
-        // إذا حدث خطأ (مثلاً لا يوجد إعلان متاح أو المنصة لم تُقبل بعد)
-        alert("التعدين غير متاح حالياً. يرجى الانتظار حتى يتم تفعيل حسابك في Adsgram.");
-        console.log("Adsgram Error:", result);
-    }).finally(() => {
-        // إعادة الزر لحالته الطبيعية بعد الانتهاء
-        adBtn.innerText = "ابدأ التعدين واكسب 100 عملة";
-        adBtn.disabled = false;
-    });
-});
+.coin-card { text-align: center; margin-bottom: 20px; }
+.coin-logo { 
+    width: 100px; 
+    height: 100px; 
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 15px #ffb400);
+}
 
-// 5. وظيفة تحديث واجهة المستخدم (تحديث الأرقام والرتبة)
-function updateUI() {
-    // عرض الرصيد بتنسيق جميل
-    document.getElementById('balance').innerText = balance.toLocaleString();
-    
-    // حساب نسبة التقدم (مثلاً كل
+#balance { font-size: 50px; margin: 0; color: #ffb400; }
+
+.stats-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    flex: 1;
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.stat-item small { color: #888; display: block; margin-bottom: 5px; }
+
+.mining-button {
+    width: 100%;
+    background: linear-gradient(90deg, #ffb400, #ff8c00);
+    border: none;
+    padding: 20px;
+    border-radius: 15px;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 180, 0, 0.3);
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: #000;
+    padding: 15px 0;
+    border-top: 1px solid #222;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nav-btn { text-align: center; color: #555; cursor: pointer; }
+.nav-btn.active { color: #ffb400; }
+.nav-btn span { display: block; font-size: 20px; }
