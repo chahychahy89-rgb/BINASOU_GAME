@@ -3,67 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BINASOU GOLD</title>
+    <title>BINASOU GOLD OFFICIAL</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; text-align: center; overflow: hidden; }
-        .header { padding: 30px; font-size: 50px; color: #ffae00; font-weight: bold; }
-        .tap-zone { height: 65vh; display: flex; align-items: center; justify-content: center; }
-        .coin { width: 220px; height: 220px; border: 10px solid #ffae00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; background: radial-gradient(#222, #000); box-shadow: 0 0 30px #ffae00; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; transition: transform 0.05s; }
-        .coin:active { transform: scale(0.92); }
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; border-top: 2px solid #222; height: 70px; }
-        .nav-btn { flex: 1; border: none; background: none; color: #666; font-size: 16px; cursor: pointer; }
-        .nav-btn.active { color: #ffae00; font-weight: bold; }
-        .screen { display: none; padding: 20px; }
-        .active-screen { display: block; }
-    </style>
-</head>
-<body>
+        :root { --gold: #ffae00; --bg: #000; --card: #151515; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; overflow: hidden; user-select: none; -webkit-tap-highlight-color: transparent; }
+        
+        /* الهيدر */
+        .header { height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0a0a0a; border-bottom: 2px solid #222; }
+        #score { font-size: 42px; font-weight: bold; color: var(--gold); text-shadow: 0 0 10px rgba(255,174,0,0.3); }
 
-    <div id="score" class="header">0</div>
+        /* الصفحات */
+        .page { display: none; height: calc(100vh - 150px); padding: 20px; overflow-y: auto; flex-direction: column; align-items: center; }
+        .active-page { display: flex; }
 
-    <div id="mPage" class="screen active-screen">
-        <div class="tap-zone">
-            <div class="coin" id="mainCoin">Binasou</div>
-        </div>
-    </div>
+        /* زر التعدين */
+        .mining-container { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .coin-btn { width: 230px; height: 230px; border: 8px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; background: radial-gradient(circle, #252525, #000); box-shadow: 0 0 40px rgba(255,174,0,0.4); transition: transform 0.05s; }
+        .coin-btn:active { transform: scale(0.92); }
 
-    <div id="tPage" class="screen">
-        <h2>المهام اليومية 📋</h2>
-        <div style="background:#1a1a1a; padding:20px; border-radius:15px; border-right:5px solid #ffae00;">
-            قناة التليجرام (+5,000)
-            <button onclick="window.open('https://t.me/your_channel')" style="background:#ffae00; border:none; padding:10px; border-radius:8px; float:left; font-weight:bold;">انضم</button>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button class="nav-btn" onclick="show('tPage', this)">المهام</button>
-        <button class="nav-btn active" onclick="show('mPage', this)">تعدين</button>
-        <button class="nav-btn" onclick="alert('قريباً!')">الأصدقاء</button>
-    </div>
-
-    <script>
-        let balance = parseInt(localStorage.getItem('b_gold')) || 0;
-        const scoreDiv = document.getElementById('score');
-
-        function update() {
-            scoreDiv.innerText = balance.toLocaleString();
-            localStorage.setItem('b_gold', balance);
-        }
-
-        function show(id, btn) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active-screen');
-            btn.classList.add('active');
-        }
-
-        document.getElementById('mainCoin').addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            balance++;
-            update();
-        });
-
-        update();
-    </script>
-</body>
-</html>
+        /* المهام */
+        .task-card { background: var(--card); width: 100%; max-width: 380px; padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid var(--gold); }
+        .task-info { display: flex; flex-direction: column; gap: 4px; }
+        .task-btn { background: var(--gold); color: #000; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor:
