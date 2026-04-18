@@ -1,69 +1,18 @@
-<div id="taskPage" class="page">
-            <h2 style="color:#ffb400">📋 المهام المتاحة</h2>
-            <div class="card">
-                <p><b>انضم لقناتنا الرسمية</b></p>
-                <p style="font-size: 0.8rem; color: #aaa;">اربح 5,000 قطعة عند الانضمام</p>
-                <button onclick="window.open('https://t.me/binasou_win_bot')">انتقال للمهمة</button>
-            </div>
-        </div>
-
-        <div id="friendPage" class="page">
-            <h2 style="color:#ffb400">👥 دعوة الأصدقاء</h2>
-            <div class="card">
-                <p>اربح <b>5,000</b> قطعة عن كل صديق تقوم بدعوته عبر رابطك الخاص!</p>
-                <div class="invite-box" id="shareLink">https://t.me/binasou_win_bot?start=user</div>
-                <button onclick="copyLink()">نسخ رابط الدعوة</button>
-                <p id="copyStatus" style="color:#00ff00; display:none; margin-top:10px; text-align:center;">✅ تم نسخ الرابط!</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="navbar">
-        <div class="nav-item active-nav" onclick="changePage('minePage', this)"><i>⛏️</i>تعدين</div>
-        <div class="nav-item" onclick="changePage('taskPage', this)"><i>📋</i>المهام</div>
-        <div class="nav-item" onclick="changePage('friendPage', this)"><i>👥</i>الأصدقاء</div>
-    </div>
-
-    <script>
-        // --- إدارة النقاط ---
-        let points = parseInt(localStorage.getItem('binasou_points')) || 2900;
-        const scoreDisplay = document.getElementById('totalScore');
-        scoreDisplay.innerText = points.toLocaleString();
-
-        // --- وظيفة الضغط (التعدين) ---
-        const tapBtn = document.getElementById('tapButton');
-        function doMining(e) {
-            if(e) e.preventDefault();
-            points += 100;
-            scoreDisplay.innerText = points.toLocaleString();
-            localStorage.setItem('binasou_points', points);
-            
-            // تأثير حركي بسيط عند الضغط
-            tapBtn.style.transform = "scale(0.95)";
-            setTimeout(() => { tapBtn.style.transform = "scale(1)"; }, 50);
-        }
-        tapBtn.onclick = doMining;
-        tapBtn.ontouchstart = doMining;
-
-        // --- نظام التنقل بين الصفحات ---
-        function changePage(pageId, navElement) {
-            // إخفاء كل الصفحات
+// التنقل
+        function show(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // إزالة اللون الأصفر من كل أزرار التنقل
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
-            
-            // إظهار الصفحة المختارة وتلوين زرها
-            document.getElementById(pageId).classList.add('active');
-            navElement.classList.add('active-nav');
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active-nav');
         }
 
-        // --- وظيفة نسخ الرابط ---
-        function copyLink() {
-            const link = document.getElementById('shareLink').innerText;
-            navigator.clipboard.writeText(link).then(() => {
-                const status = document.getElementById('copyStatus');
-                status.style.display = 'block';
-                setTimeout(() => { status.style.display = 'none'; }, 2500);
+        // النسخ
+        function copy() {
+            const t = document.getElementById('url').innerText;
+            navigator.clipboard.writeText(t).then(() => {
+                const m = document.getElementById('msg');
+                m.style.display = 'block';
+                setTimeout(() => m.style.display = 'none', 2000);
             });
         }
     </script>
