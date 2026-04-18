@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Binasou Mining</title>
-<link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
     <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
 </head>
 <body>
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <button id="adBtn" class="mining-button">
+            <button id="adBtn" class="mining-button" onclick="startMining()">
                 <span>⚡</span> ابدأ التعدين واكسب 100
             </button>
         </div>
@@ -46,6 +46,41 @@
             <div class="nav-btn"><span>🏆</span><small>ترتيب</small></div>
         </nav>
     </div>
-<script src="script.js?v=2"></script>
+
+    <script>
+        // كود تشغيل سريع لضمان عمل الزر فوراً
+        let balance = parseInt(localStorage.getItem('user_coins')) || 0;
+        document.getElementById('balance').innerText = balance.toLocaleString();
+
+        function startMining() {
+            const btn = document.getElementById('adBtn');
+            btn.innerText = "جاري التحقق...";
+            
+            // محاولة تشغيل الإعلان
+            if (window.Adsgram) {
+                const AdController = window.Adsgram.init({ blockId: "28072" });
+                AdController.show().then(() => {
+                    addCoins();
+                }).catch(() => {
+                    // إذا لم يعمل الإعلان (بسبب المراجعة)، سنضيف نقاطاً تجريبية الآن
+                    alert("نظام الإعلانات قيد التفعيل، سأمنحك نقاطاً تجريبية الآن!");
+                    addCoins();
+                });
+            } else {
+                // إذا لم تتحمل المكتبة أصلاً
+                addCoins();
+            }
+        }
+
+        function addCoins() {
+            balance += 100;
+            localStorage.setItem('user_coins', balance);
+            document.getElementById('balance').innerText = balance.toLocaleString();
+            document.getElementById('adBtn').innerText = "⚡ ابدأ التعدين واكسب 100";
+            
+            // تحديث الرتبة
+            if(balance > 1000) document.getElementById('user-rank').innerText = "رتبة: محترف 🚀";
+        }
+    </script>
 </body>
 </html>
