@@ -1,58 +1,17 @@
-<div class="nav-bar">
-        <button class="nav-item" onclick="showPage('friends-page', this)">👥 الأصدقاء</button>
-        <button class="nav-item active-nav" onclick="showPage('mining-page', this)">⛏️ تعدين</button>
-        <button class="nav-item" onclick="showPage('tasks-page', this)">📋 المهام</button>
-    </div>
-
-    <script>
-        /* --- القسم البرمجي (Script) --- */
-        
-        // 1. إدارة الرصيد والحفظ
-        let score = parseInt(localStorage.getItem('binasou_save')) || 0;
-        const balDisplay = document.getElementById('balance');
-
-        function refreshUI() {
-            balDisplay.innerText = score.toLocaleString();
-            localStorage.setItem('binasou_save', score);
-        }
-
-        // 2. التبديل بين الصفحات (إصلاح مشكلة الشاشة السوداء)
-        function showPage(pageId, btn) {
-            // إخفاء كل الصفحات
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // إزالة التنشيط عن كل الأزرار
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active-nav'));
-            
-            // إظهار الصفحة المطلوبة وتنشيط زرها
-            document.getElementById(pageId).classList.add('active');
-            btn.classList.add('active-nav');
-        }
-
-        // 3. نظام النقر (Mining) - مستوحى من كودك
-        document.getElementById('tap').addEventListener('touchstart', (e) => {
-            e.preventDefault(); // منع الزووم عند النقر المتكرر
-            score++;
-            refreshUI();
-        });
-
-        // 4. نظام جوائز المهام
-        function gift(amount) {
+function gift(n) {
             setTimeout(() => {
-                score += amount;
-                refreshUI();
+                score += n;
+                update();
                 alert('تمت إضافة الجائزة! 🎉');
             }, 2000);
         }
 
-        // 5. نظام الإحالة (تليجرام)
         function invite() {
-            const botUrl = "https://t.me/binasou_win_bot";
-            const text = encodeURIComponent("انضم إليّ في BINASOU واجمع الذهب! ⛏️💰");
-            window.open(https://t.me/share/url?url=${botUrl}&text=${text});
+            const url = "https://t.me/binasou_win_bot";
+            window.open(https://t.me/share/url?url=${url}&text=انضم إلينا!);
         }
 
-        // تشغيل التحديث الأول للرصيد عند فتح الصفحة
-        refreshUI();
+        update(); // تحديث الرصيد عند الفتح
     </script>
 </body>
 </html>
