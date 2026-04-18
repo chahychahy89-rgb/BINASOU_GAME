@@ -1,61 +1,32 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BINASOU GOLD</title>
-    <script src="https://adsgram.ai/js/adsgram-ad-sdk.js"></script>
-    <style>
-        :root { --gold: #ffae00; --bg: #0b0b0b; --card: #1a1a1a; }
-        body { background-color: var(--bg); color: #fff; font-family: sans-serif; margin: 0; padding: 0; overflow: hidden; -webkit-tap-highlight-color: transparent; }
-        
-        /* شريط الرصيد العلوي */
-        .header-score { width: 100%; text-align: center; padding: 20px 0; background: rgba(0,0,0,0.5); border-bottom: 1px solid #222; }
-        .header-score h2 { margin: 0; color: var(--gold); font-size: 32px; }
+document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-btn'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById(btnId).classList.add('active-btn');
+        }
 
-        /* الصفحات */
-        .page { display: none; flex-direction: column; align-items: center; height: calc(100vh - 150px); padding: 20px; overflow-y: auto; }
-        .active-page { display: flex; }
+        // النقر
+        document.getElementById('tapBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            score += 1;
+            updateScore();
+        });
 
-        /* صفحة التعدين */
-        .mining-area { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-        .circle { width: 220px; height: 220px; border: 8px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; background: radial-gradient(circle, #222, #000); box-shadow: 0 0 30px var(--gold); transition: transform 0.05s; user-select: none; }
-        .circle:active { transform: scale(0.95); }
+        // المهام
+        function doTask(url, reward) {
+            window.open(url, '_blank');
+            setTimeout(() => { score += reward; updateScore(); alert('تمت الإضافة!'); }, 3000);
+        }
 
-        /* البطاقات */
-        .card { background: var(--card); width: 90%; max-width: 400px; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid var(--gold); }
-        .btn { background: var(--gold); color: #000; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        function shareRef() {
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=العب معي!");
+        }
 
-        /* القائمة السفلية */
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #151515; padding: 15px 0; border-top: 1px solid #333; }
-        .nav button { background: none; border: none; color: #666; font-size: 14px; cursor: pointer; }
-        .nav button.active { color: var(--gold); font-weight: bold; }
-    </style>
-</head>
-<body>
+        // إعلانات
+        const ad = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+        function showAd() {
+            if(ad) ad.show().then(() => { score += 1000; updateScore(); }).catch(() => {});
+        }
 
-    <div class="header-score">
-        <h2 id="displayScore">0</h2>
-    </div>
-
-    <div id="miningPage" class="page active-page">
-        <div class="mining-area">
-            <div class="circle" id="tapBtn">Binasou</div>
-        </div>
-    </div>
-
-    <div id="tasksPage" class="page">
-        <h3>المهام اليومية 📋</h3>
-        <div class="card">
-            <div><strong>انضم للقناة</strong><br><small>+5,000 قطعة</small></div>
-            <button class="btn" onclick="openLink('https://t.me/your_channel', 5000)">انضم</button>
-        </div>
-        <div class="card">
-            <div><strong>شاهد إعلان</strong><br><small>+1,000 قطعة</small></div>
-            <button class="btn" onclick="playAd()">شاهد</button>
-        </div>
-    </div>
-
-    <div id="friendsPage" class="page">
-        <h3>الأصدقاء 👥</h3>
-        <div class="card" style="flex
+        updateScore();
+    </script>
+</body>
+</html>
