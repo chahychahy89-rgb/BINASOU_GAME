@@ -64,20 +64,47 @@
         if (AdController) {
             AdController.show().then((result) => {
                 // إضافة مكافأة
+       <script>
+    // 1. تعريف المتغيرات (تأكد أن ID العداد هو 'ts' وID الدائرة هو 'click-area')
+    let count = parseInt(localStorage.getItem('count')) || 2900;
+    const scoreDisplay = document.getElementById('ts');
+    const clickCircle = document.querySelector('.circle'); // أو المعرف الخاص بالدائرة
+
+    // 2. كود الإعلانات (Adsgram)
+    const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+
+    function showAd() {
+        if (AdController) {
+            AdController.show().then(() => {
                 count += 500;
-                const tsElement = document.getElementById('ts');
-                if (tsElement) tsElement.innerText = count.toLocaleString();
-            }).catch((result) => {
-                console.error("Ad error:", result);
-            });
+                updateDisplay();
+            }).catch((err) => console.log("Ad skipped/error", err));
         }
     }
 
-    // تشغيل الإعلان عند فتح اللعبة (اختياري)
-    window.onload = function() {
-        setTimeout(showAd, 2000);
-    };
-</script>
+    // 3. وظيفة تحديث العداد على الشاشة
+    function updateDisplay() {
+        if (scoreDisplay) {
+            scoreDisplay.innerText = count.toLocaleString();
+            localStorage.setItem('count', count);
+        }
+    }
 
-</body>
-</html>
+    // 4. وظيفة النقر (التعدين)
+    if (clickCircle) {
+        clickCircle.addEventListener('click', () => {
+            count += 1; // زيادة بمقدار 1 عند كل نقرة
+            updateDisplay();
+            
+            // إضافة تأثير بصري عند النقر
+            clickCircle.style.transform = "scale(0.95)";
+            setTimeout(() => clickCircle.style.transform = "scale(1)", 100);
+        });
+    }
+
+    // تشغيل إعلان تلقائي بعد 3 ثوانٍ
+    window.onload = () => {
+        updateDisplay();
+        setTimeout(showAd, 3000);
+    };
+</script> 
