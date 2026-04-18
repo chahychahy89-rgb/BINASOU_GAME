@@ -17,16 +17,15 @@ body {
     position: relative;
 }
 .coin-logo {
-   ي.binasou-logo-fixed {
-    width: 130px !important;    /* تحديد العرض */
-    height: 130px !important;   /* تحديد الطول */
-    border-radius: 50%;         /* جعل الشعار دائرياً تماماً */
-    object-fit: cover;          /* لعدم تمدد الصورة */
-    border: 4px solid #ffb400;  /* إطار ذهبي فخم */
-    margin: 20px auto;          /* للتوسط في المنتصف */
-    display: block;             /* لضمان التمركز */
-    box-shadow: 0 0 25px rgba(255, 180, 0, 0.6); /* توهج ذهبي خلف الشعار */
-}
+   .binasou-logo-fixed {
+    width: 130px !important;
+    height: 130px !important;
+    border-radius: 50% !important; /* لجعلها دائرية فخمة */
+    object-fit: cover !important;
+    border: 3px solid #ffb400 !important; /* إطار ذهبي */
+    margin: 20px auto !important;
+    display: block !important;
+    box-shadow: 0 0 20px rgba(255, 180, 0, 0.5) !important;
 }
 #balance {
     font-size: 45px;
