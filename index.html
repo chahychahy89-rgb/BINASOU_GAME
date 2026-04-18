@@ -3,81 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Binasou Gold</title>
+    <title>Binasou Gold Official</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        /* التنسيقات العامة */
+        body { background: #000; color: #fff; font-family: 'Arial', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         .page { display: none; flex: 1; padding: 20px; text-align: center; overflow-y: auto; }
         .page.active { display: block; }
-.gold-logo { 
-            width: 150px; 
-            height: 150px; 
-            border-radius: 50%; 
-            border: 4px solid #ffb400; 
-            margin: 20px auto; 
-            background-image: url('https://raw.githubusercontent.com/chahychahy89-rgb/BINASOU_GAME/main/1000050825.jpg');
-            background-size: cover; 
-            background-position: center;
-            box-shadow: 0 0 20px #ffb400;
+
+        /* الدائرة الذهبية مع اسم Binasou */
+        .gold-circle { 
+            width: 170px; height: 170px; border-radius: 50%; 
+            border: 5px solid #ffb400; margin: 30px auto; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; font-weight: bold; color: #ffb400; 
+            text-shadow: 0 0 15px #ffb400; 
+            box-shadow: 0 0 30px rgba(255, 180, 0, 0.5);
+            background: radial-gradient(circle, #1a1a1a, #000);
+            cursor: pointer; transition: transform 0.1s;
         }
-        .balance { color: #ffb400; font-size: 4rem; margin: 10px 0; font-weight: bold; }
-        .btn { background: #ffb400; color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; cursor: pointer; font-size: 1.2rem; }
-        .nav { background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-item { color: #555; text-align: center; cursor: pointer; }
-        .nav-item.active { color: #ffb400; }
-        .card { background: #1a1a1a; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
+        .gold-circle:active { transform: scale(0.95); }
+
+        /* الرصيد والأزرار */
+        .balance-val { color: #ffb400; font-size: 4rem; font-weight: bold; margin: 10px 0; }
+        .main-btn { background: linear-gradient(145deg, #ffb400, #cc9200); color: #000; border: none; padding: 18px; border-radius: 15px; font-weight: bold; width: 90%; font-size: 1.2rem; cursor: pointer; }
+        
+        /* القائمة السفلية */
+        .nav-bar { background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
+        .nav-item { color: #555; text-align: center; cursor: pointer; font-size: 0.9rem; }
+        .nav-item.active { color: #ffb400; font-weight: bold; }
+
+        /* تنسيق المهام */
+        .task-card { background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
-    <div id="p1" class="page active">
-        <div style="display:flex; justify-content: space-between; font-size: 0.8rem; color:#ffb400"><span>⛏️ Binasou Miner</span><span>رتبة: محترف 🚀</span></div>
-        <div class="gold-logo"></div>
-        <div class="balance" id="b">2,000</div>
-        <button class="btn" onclick="m()">⚡ ابدأ التعدين واكسب 100</button>
-    </div>
 
-    <div id="p2" class="page">
-        <h2 style="color:#ffb400">📋 المهام</h2>
-        <div class="card">
-            <div style="text-align:right"><span>قناة التليجرام</span><br><small style="color:#ffb400">+1,000</small></div>
-            <button class="btn" style="width:auto" onclick="t('https://t.me/Binasou4', 1000)">تنفيذ</button>
-        </div>
-    </div>
-
-    <div id="p3" class="page">
-        <h2 style="color:#ffb400">👥 الأصدقاء</h2>
-        <div style="border:2px dashed #ffb400; padding:30px; border-radius:20px; margin-top:20px">
-            <p>اكسب 2,000 عملة عن كل صديق!</p>
-            <button class="btn" onclick="s()">🔗 إرسال دعوة</button>
-        </div>
-    </div>
-
-    <nav class="nav">
-        <div class="nav-item active" onclick="go('p1', this)">⛏️<br>تعدين</div>
-        <div class="nav-item" onclick="go('p2', this)">📋<br>مهام</div>
-        <div class="nav-item" onclick="go('p3', this)">👥<br>أصدقاء</div>
-    </nav>
-
-    <script>
-        let score = parseInt(localStorage.getItem('sc')) || 2000;
-        document.getElementById('b').innerText = score.toLocaleString();
-
-        function go(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-        }
-
-        function m() { score += 100; up(); }
-
-        function t(u, a) { window.open(u, '_blank'); setTimeout(() => { score += a; up(); alert("تمت إضافة المكافأة! 🎉"); }, 2000); }
-
-        function s() { window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم إلينا!"); }
-
-        function up() {
-            localStorage.setItem('sc', score);
-            document.getElementById('b').innerText = score.toLocaleString();
-        }
-    </script>
-</body>
-</html>
+    <div id="p-mining" class="
