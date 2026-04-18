@@ -1,0 +1,38 @@
+// تعريف المحرك (BlockID الخاص بكِ)
+const AdController = window.Adsgram.init({ blockId: "28072" });
+
+// تحميل الرصيد من ذاكرة الهاتف
+let balance = parseInt(localStorage.getItem('user_coins')) || 0;
+updateUI();
+
+const adBtn = document.getElementById('adBtn');
+
+adBtn.addEventListener('click', () => {
+    // محاولة إظهار الإعلان
+    adBtn.innerText = "جاري التحميل...";
+    adBtn.disabled = true;
+
+    AdController.show().then((result) => {
+        // نجاح: المستخدم شاهد الإعلان
+        balance += 100;
+        localStorage.setItem('user_coins', balance);
+        updateUI();
+        alert("🎉 مبروك! تمت إضافة 100 عملة إلى رصيدك.");
+    }).catch((result) => {
+        // فشل: لا يوجد إعلانات أو تم الرفض
+        alert("الإعلان غير جاهز حالياً. تأكدي من قبول المنصة في Adsgram.");
+    }).finally(() => {
+        adBtn.innerText = "ابدأ التعدين واكسب 100 عملة";
+        adBtn.disabled = false;
+    });
+});
+
+function updateUI() {
+    document.getElementById('balance').innerText = balance.toLocaleString();
+    let progress = (balance % 1000) / 10;
+    document.getElementById('progress-text').innerText = Math.floor(progress) + "%";
+    
+    // تغيير الرتبة حسب الرصيد
+    if(balance > 5000) document.getElementById('user-rank').innerText = "رتبة: خبير 👑";
+    else if(balance > 1000) document.getElementById('user-rank').innerText = "رتبة: متقدم 🚀";
+}
