@@ -1,77 +1,92 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Binasou Game</title>
     <style>
-        * { touch-action: manipulation !important; -webkit-tap-highlight-color: transparent !important; box-sizing: border-box; }
-        body { background: #000; color: #fff; margin: 0; font-family: sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        /* إعدادات الشاشة ومنع التعليق */
+        * { 
+            touch-action: manipulation !important; 
+            -webkit-tap-highlight-color: transparent !important; 
+            box-sizing: border-box; 
+            user-select: none; 
+        }
+        body { 
+            background: #000; 
+            color: #fff; 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
         
-        .content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .page { display: none; width: 100%; text-align: center; padding: 20px; }
+        /* الحاوية الرئيسية */
+        .container { flex: 1; position: relative; width: 100%; }
+        .page { 
+            display: none; 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            text-align: center; 
+            padding: 40px 20px; 
+        }
         .active { display: block; }
 
-        #tapBtn { width: 230px; height: 230px; border: 10px solid #ffb400; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #ffb400; background: rgba(255,180,0,0.1); cursor: pointer; box-shadow: 0 0 20px #ffb400; user-select: none; }
-        #tapBtn:active { transform: scale(0.95); background: rgba(255,180,0,0.3); }
-        
-        .score { font-size: 5rem; font-weight: bold; color: #ffb400; margin-top: 20px; }
-        
-        .nav { height: 80px; background: #111; display: flex; border-top: 2px solid #333; }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #666; cursor: pointer; font-size: 0.9rem; }
-        .nav-item.selected { color: #ffb400; }
-        .nav-item i { font-size: 1.5rem; margin-bottom: 5px; }
-    </style>
-</head>
-<body>
-
-    <div class="content">
-        <div id="minePage" class="page active">
-            <div style="color:#ffb400; margin-bottom:20px;">⛏️ BINASOU GOLD</div>
-            <div id="tapBtn">Binasou</div>
-            <div class="score" id="scoreVal">2,900</div>
-        </div>
-
-        <div id="taskPage" class="page">
-            <h2 style="color:#ffb400">📋 المهام</h2>
-            <p>انضم لقناتنا لتربح 5000 نقطة</p>
-            <button style="background:#ffb400; border:none; padding:10px 20px; border-radius:8px; font-weight:bold;">انضم الآن</button>
-        </div>
-
-        <div id="friendPage" class="page">
-            <h2 style="color:#ffb400">👥 الأصدقاء</h2>
-            <p>ادعُ أصدقاءك واربح الذهب</p>
-        </div>
-    </div>
-
-    <div class="nav">
-        <div class="nav-item selected" onclick="showPage('minePage', this)"><i>⛏️</i>تعدين</div>
-        <div class="nav-item" onclick="showPage('taskPage', this)"><i>📋</i>المهام</div>
-        <div class="nav-item" onclick="showPage('friendPage', this)"><i>👥</i>الأصدقاء</div>
-    </div>
-
-    <script>
-        let pts = parseInt(localStorage.getItem('pts')) || 2900;
-        const display = document.getElementById('scoreVal');
-        display.innerText = pts.toLocaleString();
-
-        // نظام الضغط
-        const btn = document.getElementById('tapBtn');
-        const handleTap = (e) => {
-            if(e) e.preventDefault();
-            pts += 100;
-            display.innerText = pts.toLocaleString();
-            localStorage.setItem('pts', pts);
-        };
-        btn.onclick = handleTap;
-        btn.ontouchstart = handleTap;
-
-        // تنقل الصفحات بدون Alerts
-        function showPage(pageId, element) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('selected'));
-            document.getElementById(pageId).classList.add('active');
-            element.classList.add('selected');
+        /* صفحة التعدين */
+        .gold-circle { 
+            width: 220px; 
+            height: 220px; 
+            border: 10px solid #ffb400; 
+            border-radius: 50%; 
+            margin: 30px auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 2.2rem; 
+            color: #ffb400; 
+            background: rgba(255,180,0,0.1); 
+            cursor: pointer; 
+            box-shadow: 0 0 25px rgba(255,180,0,0.4); 
+            transition: transform 0.1s; 
         }
-    </script>
-</body>
-</html>
+        .gold-circle:active { transform: scale(0.92); background: rgba(255,180,0,0.3); }
+        .score { font-size: 4.5rem; font-weight: bold; color: #ffb400; margin: 10px 0; }
+
+        /* الأقسام والمهام */
+        .card { 
+            background: #111; 
+            border: 1px solid #333; 
+            border-radius: 15px; 
+            padding: 20px; 
+            margin: 20px 0; 
+        }
+        .link-box { 
+            background: #000; 
+            padding: 15px; 
+            border-radius: 10px; 
+            border: 1px dashed #ffb400; 
+            color: #ffb400; 
+            word-break: break-all; 
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        button { 
+            background: #ffb400; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            width: 100%; 
+            cursor: pointer; 
+            font-size: 1rem;
+        }
+
+        /* شريط التنقل السفلي */
+        .navbar { 
+            height: 85px; 
+            background: #111; 
+            display: flex; 
+            border-top: 2px solid #333;
