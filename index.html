@@ -2,64 +2,72 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BINASOU GOLD</title>
     <script src="https://adsgram.ai/js/adsgram-ad-sdk.js"></script>
     <style>
-        body { background-color: black; color: white; text-align: center; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        h1 { color: #FFD700; margin-bottom: 20px; }
-        .circle {
-            width: 200px; height: 200px; border: 8px solid #FFA500; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; cursor: pointer; user-select: none;
-            box-shadow: 0 0 20px #FFA500; transition: transform 0.1s;
-        }
-        .circle:active { transform: scale(0.9); }
-        .score { font-size: 48px; font-weight: bold; margin-top: 20px; color: #FFD700; }
-        .footer { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: space-around; }
-        button { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        h1 { color: #ffae00; margin-top: -50px; font-size: 28px; text-shadow: 0 0 10px rgba(255,174,0,0.5); }
+        .circle-container { width: 250px; height: 250px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+        .circle { width: 220px; height: 220px; border: 8px solid #ffae00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; background: radial-gradient(circle, #222, #000); box-shadow: 0 0 35px #ffae00; transition: transform 0.05s; pointer-events: none; }
+        .score-display { font-size: 60px; font-weight: bold; color: #ffae00; margin-top: 40px; }
+        .footer { position: fixed; bottom: 20px; width: 90%; display: flex; justify-content: space-around; background: rgba(34,34,34,0.9); padding: 15px; border-radius: 15px; }
+        .footer button { background: #333; border: none; color: #fff; padding: 10px 15px; border-radius: 10px; font-size: 14px; cursor: pointer; flex: 1; margin: 0 5px; }
+        .footer button:active { background: #555; }
     </style>
 </head>
 <body>
 
-<div class="container">
     <h1>BINASOU GOLD ⛏️</h1>
-    <div class="circle" id="tapBtn">Binasou</div>
-    <div class="score" id="scoreVal">2,900</div>
-</div>
 
-<div class="footer">
-    <button>أصدقاء</button>
-    <button>مهام</button>
-    <button onclick="location.reload()">تعدين</button>
-</div>
+    <div class="circle-container" id="tapArea">
+        <div class="circle" id="visualCircle">Binasou</div>
+    </div>
 
-<script>
-    // برمجة العداد
-    let count = parseInt(localStorage.getItem('bina_val')) || 2900;
-    const scoreDisplay = document.getElementById('scoreVal');
-    const btn = document.getElementById('tapBtn');
+    <div class="score-display" id="ts">2,903</div>
 
-    function update() {
-        scoreDisplay.innerText = count.toLocaleString();
-        localStorage.setItem('bina_val', count);
-    }
+    <div class="footer">
+        <button onclick="alert('قسم الأصدقاء سيتوفر قريباً!')">أصدقاء</button>
+        <button onclick="alert('قسم المهام سيتوفر قريباً!')">مهام</button>
+        <button onclick="location.reload()">تعدين</button>
+    </div>
 
-    btn.onclick = function() {
-        count += 1;
-        update();
-    };
+    <script>
+        let count = parseInt(localStorage.getItem('bina_total')) || 2903;
+        const scoreDisplay = document.getElementById('ts');
+        const tapArea = document.getElementById('tapArea');
+        const visualCircle = document.getElementById('visualCircle');
 
-    // برمجة الإعلانات
-    const Ads = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
-    function showAd() {
-        if(Ads) Ads.show().then(() => { count += 500; update(); }).catch(() => {});
-    }
+        function updateUI() {
+            scoreDisplay.innerText = count.toLocaleString();
+            localStorage.setItem('bina_total', count);
+        }
 
-    update();
-    setTimeout(showAd, 4000); // إعلان بعد 4 ثوانٍ
-</script>
+        // معالجة النقر
+        tapArea.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // لمنع الزووم في الموبايل
+            count += 1;
+            updateUI();
+            visualCircle.style.transform = "scale(0.92)";
+            setTimeout(() => visualCircle.style.transform = "scale(1)", 50);
+        });
 
+        // نظام الإعلانات
+        const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+
+        function showAd() {
+            if (AdController) {
+                AdController.show().then(() => {
+                    count += 500;
+                    updateUI();
+                }).catch(() => {});
+            }
+        }
+
+        window.onload = () => {
+            updateUI();
+            setTimeout(showAd, 5000);
+        };
+    </script>
 </body>
 </html>
