@@ -1,38 +1,42 @@
-// تعريف المحرك (BlockID الخاص بكِ)
+// 1. إعداد محرك الإعلانات باستخدام الرقم الخاص بكِ
 const AdController = window.Adsgram.init({ blockId: "28072" });
 
-// تحميل الرصيد من ذاكرة الهاتف
+// 2. تحميل رصيد المستخدم المحفوظ (أو البدء من 0 إذا كان جديداً)
 let balance = parseInt(localStorage.getItem('user_coins')) || 0;
+
+// تحديث الشاشة فور فتح اللعبة بالرصيد الحالي
 updateUI();
 
+// 3. الحصول على زر التعدين من الصفحة
 const adBtn = document.getElementById('adBtn');
 
+// 4. ماذا يحدث عندما يضغط المستخدم على الزر؟
 adBtn.addEventListener('click', () => {
-    // محاولة إظهار الإعلان
-    adBtn.innerText = "جاري التحميل...";
+    // تغيير نص الزر ليشعر المستخدم أن الإعلان يتم تحميله
+    adBtn.innerText = "جاري الاتصال بالمعدن...";
     adBtn.disabled = true;
 
+    // طلب إظهار الإعلان من Adsgram
     AdController.show().then((result) => {
-        // نجاح: المستخدم شاهد الإعلان
-        balance += 100;
-        localStorage.setItem('user_coins', balance);
-        updateUI();
-        alert("🎉 مبروك! تمت إضافة 100 عملة إلى رصيدك.");
+        // إذا شاهد المستخدم الإعلان كاملاً بنجاح
+        balance += 100; // إضافة 100 عملة
+        localStorage.setItem('user_coins', balance); // حفظ الرصيد في الجهاز
+        updateUI(); // تحديث الأرقام على الشاشة
+        alert("🎉 عمل رائع! كسبت 100 عملة تعدين.");
     }).catch((result) => {
-        // فشل: لا يوجد إعلانات أو تم الرفض
-        alert("الإعلان غير جاهز حالياً. تأكدي من قبول المنصة في Adsgram.");
+        // إذا حدث خطأ (مثلاً لا يوجد إعلان متاح أو المنصة لم تُقبل بعد)
+        alert("التعدين غير متاح حالياً. يرجى الانتظار حتى يتم تفعيل حسابك في Adsgram.");
+        console.log("Adsgram Error:", result);
     }).finally(() => {
+        // إعادة الزر لحالته الطبيعية بعد الانتهاء
         adBtn.innerText = "ابدأ التعدين واكسب 100 عملة";
         adBtn.disabled = false;
     });
 });
 
+// 5. وظيفة تحديث واجهة المستخدم (تحديث الأرقام والرتبة)
 function updateUI() {
+    // عرض الرصيد بتنسيق جميل
     document.getElementById('balance').innerText = balance.toLocaleString();
-    let progress = (balance % 1000) / 10;
-    document.getElementById('progress-text').innerText = Math.floor(progress) + "%";
     
-    // تغيير الرتبة حسب الرصيد
-    if(balance > 5000) document.getElementById('user-rank').innerText = "رتبة: خبير 👑";
-    else if(balance > 1000) document.getElementById('user-rank').innerText = "رتبة: متقدم 🚀";
-}
+    // حساب نسبة التقدم (مثلاً كل
