@@ -1,62 +1,23 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    background-color: #0b0b0b;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-}
-.app-container {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    position: relative;
-}
-.coin-logo 
-.logo-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+body { background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+.app-container { display: flex; flex-direction: column; height: 100vh; }
+.page { display: none; flex: 1; padding: 20px; text-align: center; overflow-y: auto; }
+.page.active { display: block; }
+
+.main-logo {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 3px solid #ffb400; margin: 20px auto;
+    background-image: url('https://raw.githubusercontent.com/chahychahy89-rgb/BINASOU_GAME/main/1000050825.jpg');
+    background-size: cover; background-position: center;
+    box-shadow: 0 0 20px rgba(255, 180, 0, 0.5);
 }
 
-.binasou-logo-fixed {
-    width: 120px !important;
-    height: 120px !important;
-    border-radius: 50% !important;
-    border: 3px solid #ffb400 !important;
-    box-shadow: 0 0 15px rgba(255, 180, 0, 0.5);
-}
-}
-#balance {
-    font-size: 45px;
-    text-align: center;
-    color: #ffb400;
-    margin: 10px 0;
-}
-.mining-button {
-    background: linear-gradient(90deg, #ffb400, #ff8c00);
-    border: none;
-    padding: 15px;
-    border-radius: 12px;
-    color: #000;
-    font-size: 18px;
-    font-weight: bold;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: 80px; /* ليرتفع عن البار السفلي */
-}
-.bottom-nav {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    background: #111;
-    border-top: 1px solid #222;
-}
+#balance { color: #ffb400; font-size: 3.5rem; margin: 10px 0; text-shadow: 0 0 10px rgba(255, 180, 0, 0.3); }
+.action-btn { background: #ffb400; color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 100%; cursor: pointer; font-size: 1.1rem; }
+.gold-text { color: #ffb400; }
+
+.nav-bar { background: #111; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222; }
+.nav-item { color: #555; text-align: center; cursor: pointer; transition: 0.3s; }
+.nav-item.active { color: #ffb400; }
+
+.task-item { background: #1a1a1a; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border: 1px solid #333; }
+.task-btn { background: #ffb400; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; }
