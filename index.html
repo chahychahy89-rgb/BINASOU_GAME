@@ -56,44 +56,28 @@
         el.classList.add('active');
     }
 
-    // --- كود إعلانات Adsgram الجديد ---
-    const AdController = window.Adsgram.init({ blockId: "int-28086" });
+    <script>
+    // كود الإعلانات والتحكم في العداد
+    const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
 
     function showAd() {
-        AdController.show().then((result) => {
-            // مكافأة اختيارية عند مشاهدة الإعلان كاملاً
-            count += 500; 
-            document.getElementById('ts').innerText = count.toLocaleString();
-            console.log("Ad watched successfully");
-        }).catch((result) => {
-            console.error("Ad error:", result);
-        });
+        if (AdController) {
+            AdController.show().then((result) => {
+                // إضافة مكافأة
+                count += 500;
+                const tsElement = document.getElementById('ts');
+                if (tsElement) tsElement.innerText = count.toLocaleString();
+            }).catch((result) => {
+                console.error("Ad error:", result);
+            });
+        }
     }
 
-  // --- كود إعلانات Adsgram الجديد ---
-// تأكد أن هذا الجزء يعمل فقط إذا كان المكتبة محملة
-const AdController = window.Adsgram ? window.Adsgram.init({ blockId: "int-286" }) : null;
+    // تشغيل الإعلان عند فتح اللعبة (اختياري)
+    window.onload = function() {
+        setTimeout(showAd, 2000);
+    };
+</script>
 
-function showAd() {
-    if (AdController) {
-        AdController.show().then((result) => {
-            // مكافأة عند مشاهدة الإعلان كاملاً
-            count += 500;
-            const tsElement = document.getElementById('ts');
-            if (tsElement) tsElement.innerText = count.toLocaleString();
-            console.log("Ad watched successfully");
-        }).catch((result) => {
-            console.error("Ad error:", result);
-        });
-    } else {
-        console.log("Adsgram not loaded yet");
-    }
-}
-
-// تشغيل الإعلان بعد ثانيتين (اختياري)
-window.onload = function() {
-    setTimeout(() => {
-        // نتحقق أولاً هل الحساب مفعل أم لا لتجنب التعليق
-        showAd();
-    }, 2000);
-};
+</body>
+</html>
