@@ -1,67 +1,7 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BINASOU GOLD</title>
-    <style>
-        :root { --gold: #ffae00; --bg: #000; --card: #141414; }
-        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; overflow: hidden; touch-action: manipulation; }
-        
-        /* الرصيد العلوي */
-        .header { height: 100px; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--gold); background: #000; }
-        #balance { font-size: 50px; font-weight: bold; color: var(--gold); text-shadow: 0 0 15px rgba(255,174,0,0.5); }
-
-        /* حاوية الصفحات */
-        .page { display: none; height: calc(100vh - 175px); padding: 20px; flex-direction: column; align-items: center; overflow-y: auto; box-sizing: border-box; }
-        .active { display: flex; }
-
-        /* التعدين */
-        .coin-btn { width: 250px; height: 250px; border: 8px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; background: radial-gradient(#222, #000); box-shadow: 0 0 40px rgba(255,174,0,0.3); transition: transform 0.05s; cursor: pointer; margin-top: 40px; }
-        .coin-btn:active { transform: scale(0.92); }
-
-        /* شكل المهام الاحترافي الجديد */
-        .task-card { background: var(--card); width: 100%; max-width: 380px; padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; position: relative; overflow: hidden; }
-        .task-card::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 5px; background: var(--gold); }
-        .task-info b { display: block; font-size: 16px; margin-bottom: 5px; color: #ccc; }
-        .task-info span { color: var(--gold); font-weight: bold; font-size: 14px; }
-        
-        .join-btn { background: var(--gold); color: #000; text-decoration: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; font-size: 14px; border: none; cursor: pointer; }
-
-        /* القائمة السفلية */
-        .nav { position: fixed; bottom: 0; width: 100%; height: 75px; background: #050505; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #222; }
-        .nav-btn { background: none; border: none; color: #666; font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-        .nav-btn.active-nav { color: var(--gold); font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <div class="header"><div id="balance">0</div></div>
-
-    <div id="mining" class="page active">
-        <div class="coin-btn" id="tap">BINASOU</div>
+<div style="background: #141414; padding: 16px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid #ffae00; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+    <div style="text-align: right;">
+        <b style="display: block; font-size: 16px; color: #fff; margin-bottom: 4px;">قناة التليجرام الرسمي</b>
+        <span style="color: #ffae00; font-weight: bold; font-size: 14px;">+2,000 💰</span>
     </div>
-
-    <div id="tasks" class="page">
-        <h2 style="color:var(--gold)">المهام الرسمية 📋</h2>
-        <div class="task-card">
-            <div class="task-info"><b>قناة التليجرام الرسمي</b><span>+2,000 💰</span></div>
-            <a href="https://t.me/binasou4" target="_blank" class="join-btn" onclick="claim(2000)">انضم الآن</a>
-        </div>
-        <div class="task-card">
-            <div class="task-info"><b>قناة اليوتيوب</b><span>+5,000 💰</span></div>
-            <a href="https://youtube.com/@chamschams-y7w" target="_blank" class="join-btn" onclick="claim(5000)">اشتراك</a>
-        </div>
-    </div>
-
-    <div id="friends" class="page">
-        <h2 style="color:var(--gold)">دعوة الأصدقاء 👥</h2>
-        <div class="task-card" style="flex-direction:column; gap:15px; text-align:center;">
-            <p>احصل على 2,500 قطعة لكل صديق!</p>
-            <button class="join-btn" style="width:100%" onclick="invite()">إرسال رابط الدعوة 🚀</button>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button class="nav-btn" onclick="show('friends', this)">👥<span>الأصدقاء</span></button>
-        <button class="nav-btn active-nav"
+    <a href="https://t.me/binasou4" target="_blank" onclick="gift(2000)" style="background: #ffae00; color: #000; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s;">انضم الآن</a>
+</div>
