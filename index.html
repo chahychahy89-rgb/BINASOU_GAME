@@ -1,24 +1,12 @@
-function doTask(reward, link) {
-            window.open(link, '_blank');
-            setTimeout(() => {
-                balance += reward;
-                updateUI();
-                alert("تهانينا! حصلت على " + reward + " عملة");
-            }, 2000);
-        }
-
-        function shareGame() {
-            const url = "https://t.me/binasou_win_bot";
-            const text = "انضم إلي في بوت تعدين Binasou واكسب العملات مجاناً! 🚀";
-            window.open(https://t.me/share/url?url=${url}&text=${text});
-        }
-
-        function updateUI() {
+function updateUI() {
             localStorage.setItem('user_coins', balance);
             document.getElementById('balance').innerText = balance.toLocaleString();
         }
 
-        // كود التعدين السابق كما هو...
+        function startMining() {
+            balance += 100;
+            updateUI();
+        }
     </script>
 </body>
 </html>
