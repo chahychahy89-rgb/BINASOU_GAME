@@ -1,65 +1,20 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BINASOU GOLD OFFICIAL</title>
-    <style>
-        :root { --gold: #ffae00; --bg: #0b0b0b; --card: #1a1a1a; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; }
-        
-        /* شريط الرصيد العلوي */
-        .header { height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; border-bottom: 2px solid var(--gold); box-shadow: 0 4px 15px rgba(255,174,0,0.2); }
-        #scoreDisplay { font-size: 55px; font-weight: bold; color: var(--gold); text-shadow: 0 0 20px rgba(255,174,0,0.5); }
+function show(id, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active-nav');
+        }
 
-        /* منطقة المحتوى */
-        .content { height: calc(100vh - 180px); overflow-y: auto; padding: 20px; box-sizing: border-box; }
-        .page { display: none; flex-direction: column; align-items: center; width: 100%; }
-        .active { display: flex; }
+        document.getElementById('tap').addEventListener('touchstart', (e) => {
+            e.preventDefault(); score++; update();
+        });
 
-        /* الدائرة الذهبية للتعدين */
-        .coin-zone { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 350px; }
-        .coin { width: 240px; height: 240px; border: 10px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; background: radial-gradient(#222, #000); box-shadow: 0 0 40px rgba(255,174,0,0.4); transition: transform 0.05s; cursor: pointer; }
-        .coin:active { transform: scale(0.92); }
+        function gift(n) { setTimeout(() => { score += n; update(); alert('تمت إضافة الجائزة! 🎉'); }, 2000); }
 
-        /* تصميم كروت المهام */
-        .task-card { background: var(--card); width: 100%; max-width: 400px; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid var(--gold); }
-        .task-info b { font-size: 16px; display: block; }
-        .task-info span { color: var(--gold); font-size: 14px; }
-        .btn-action { background: var(--gold); color: #000; text-decoration: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; }
-
-        /* القائمة السفلية */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 70px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
-        .nav-item { background: none; border: none; color: #666; font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-        .nav-item.active-nav { color: var(--gold); font-weight: bold; }
-        .nav-item i { font-size: 20px; }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <div id="scoreDisplay">0</div>
-    </div>
-
-    <div class="content">
-        <div id="mining" class="page active">
-            <div class="coin-zone">
-                <div class="coin" id="tapBtn">BINASOU</div>
-            </div>
-        </div>
-
-        <div id="tasks" class="page">
-            <h2 style="color: var(--gold);">المهام 📋</h2>
-            <div class="task-card">
-                <div class="task-info"><b>قناة اليوتيوب</b><span>+5,000💰</span></div>
-                <a href="https://youtube.com/@chamschams-y7w?si=h5DokuHNfz-R3kZW" target="_blank" class="btn-action" onclick="addBonus(5000)">اشترك</a>
-            </div>
-            <div class="task-card">
-                <div class="task-info"><b>حساب تيك توك</b><span>+3,000💰</span></div>
-                <a href="https://www.tiktok.com/@chamschams188?_r=1&_t=ZN-95eZziQpM9r" target="_blank" class="btn-action" onclick="addBonus(3000)">متابعة</a>
-            </div>
-            <div class="task-card">
-                <div class="task-info"><b>قناة التليجرام</b><span>+2,000💰</span></div>
-                <a href="https://t.me/binasou4" target="_blank" class="btn-action" onclick="addBonus(2000)">انضم</a>
-            </div>
-        </div>
+        function invite() {
+            window.open(https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم إلي واجمع الذهب! ⛏️💰);
+        }
+        update();
+    </script>
+</body>
+</html>
