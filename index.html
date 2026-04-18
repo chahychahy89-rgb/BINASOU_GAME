@@ -2,72 +2,62 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>BINASOUEARN OFFICIAL</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
-    <style>
-        body { background: #0b0e11; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        .balance-box { background: #1e2329; padding: 20px; border-radius: 15px; border: 1px solid #f3ba2f; margin-bottom: 20px; }
-        .btn { background: #f3ba2f; color: black; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin: 10px 0; cursor: pointer; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binasou Mining</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://sad.adsgram.ai/js/adsgram-ad-sdk.js"></script>
 </head>
 <body>
+    <div class="app-container">
+        <div class="header">
+            <div class="user-info">
+                <span class="username">Binasou Miner</span>
+                <span class="rank">مبتدئ</span>
+            </div>
+        </div>
 
-    <div class="balance-box">
-        <h2>رصيدك الحالي</h2>
-        <h1 id="balance">0</h1>
-        <div id="user-rank" style="color: #f3ba2f;">مبتدئ Binasou</div>
+        <div class="mining-section">
+            <div class="coin-display">
+                <img src="https://cdn-icons-png.flaticon.com/512/5434/5434687.png" class="coin-icon">
+                <h1 id="balance">0</h1>
+                <p>عملات معلقة</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>لكل ساعة</span>
+                    <strong>100</strong>
+                </div>
+                <div class="stat-box">
+                    <span>التقدم</span>
+                    <strong id="progress-text">0%</strong>
+                </div>
+            </div>
+
+            <button id="adBtn" class="main-btn">
+                <span class="icon">⛏️</span> ابدأ التعدين (شاهد إعلان)
+            </button>
+        </div>
+
+        <nav class="navbar">
+            <div class="nav-item active">
+                <span>⛏️</span>
+                <small>تعدين</small>
+            </div>
+            <div class="nav-item">
+                <span>📋</span>
+                <small>مهام</small>
+            </div>
+            <div class="nav-item">
+                <span>👥</span>
+                <small>أصدقاء</small>
+            </div>
+            <div class="nav-item">
+                <span>🏆</span>
+                <small>ترتيب</small>
+            </div>
+        </nav>
     </div>
-
-    <button id="daily-btn" class="btn" onclick="claimDaily()">🎁 استلام المكافأة اليومية</button>
-    <button class="btn" style="background: #2ebd85; color: white;" onclick="showAd()">📺 شاهد إعلان (10 نقاط)</button>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        let balance = parseInt(localStorage.getItem('bina_balance')) || 0;
-        
-        // تحديث الواجهة عند التحميل
-        document.getElementById('balance').innerText = balance;
-
-        function updateBalance(amount) {
-            balance += amount;
-            document.getElementById('balance').innerText = balance;
-            localStorage.setItem('bina_balance', balance);
-            tg.HapticFeedback.notificationOccurred('success');
-        }
-
-        function claimDaily() {
-            const lastClaim = localStorage.getItem('last_claim');
-            const now = new Date().getTime();
-
-            if (lastClaim && (now - lastClaim < 24 * 60 * 60 * 1000)) {
-                alert("لقد استلمت مكافأتك اليوم، عد غداً!");
-            } else {
-                updateBalance(50);
-                localStorage.setItem('last_claim', now);
-                alert("مبروك! حصلت على 50 نقطة.");
-                document.getElementById('daily-btn').disabled = true;
-                document.getElementById('daily-btn').innerText = "تمت الاستلام ✅";
-            }
-        }
-
-        // إعداد الإعلانات - تأكدي من رقم الـ blockId
- const AdController = window.Adsgram.init({ blockId: "28072", debug: true });
-
-        async function showAd() {
-            try {
-                const result = await AdController.show();
-                if (result.done) {
-                    updateBalance(10);
-                }
-            } catch (e) {
-                alert("الإعلان غير متاح حالياً، حاول لاحقاً.");
-            }
-        }
-
-        tg.ready();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
