@@ -1,40 +1,75 @@
-<script>
-        // استعادة الرصيد المحفوظ أو البدء بـ 2100 كما في صوركِ
-        let score = parseInt(localStorage.getItem('binasou_score')) || 2100;
-        const balDisplay = document.getElementById('user-balance');
-        balDisplay.innerText = score.toLocaleString();
-
-        function nav(pageId, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            el.classList.add('active');
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Binasou Miner Gold</title>
+    <style>
+        /* التنسيق الأساسي لمنع الشاشة السوداء */
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden; 
         }
+        .page { display: none; flex: 1; padding: 20px; text-align: center; }
+        .page.active { display: block; }
 
-        function mine() {
-            score += 100;
-            update();
+        /* دائرة Binasou الذهبية المضيئة */
+        .gold-logo { 
+            width: 160px; 
+            height: 160px; 
+            border-radius: 50%; 
+            border: 4px solid #ffb400; 
+            margin: 40px auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 2.2rem; 
+            font-weight: bold; 
+            color: #ffb400; 
+            text-shadow: 0 0 15px #ffb400; 
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
+            background: radial-gradient(circle, #111, #000);
+            cursor: pointer; 
+            transition: 0.1s;
         }
+        .gold-logo:active { transform: scale(0.95); }
 
-        function doTask(url, reward) {
-            window.open(url, '_blank');
-            setTimeout(() => {
-                score += reward;
-                update();
-                alert("تهانينا! تمت إضافة المكافأة لحسابك 🎉");
-            }, 2000);
+        /* الرصيد والأزرار */
+        .balance-container { color: #ffb400; font-size: 4rem; font-weight: bold; margin: 20px 0; }
+        .mine-btn { 
+            background: linear-gradient(145deg, #ffb400, #cc9200); 
+            color: #000; border: none; padding: 20px; 
+            border-radius: 15px; font-weight: bold; 
+            width: 90%; font-size: 1.3rem; cursor: pointer; 
         }
+        
+        /* القائمة السفلية */
+        .nav-bar { 
+            background: #111; 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 15px 0; 
+            border-top: 1px solid #222; 
+        }
+        .nav-item { color: #555; text-align: center; cursor: pointer; font-size: 0.9rem; flex: 1; }
+        .nav-item.active { color: #ffb400; font-weight: bold; }
+    </style>
+</head>
+<body>
 
-        function invite() {
-            const botUrl = "https://t.me/binasou_win_bot";
-            const text = "انضم معي في أفضل بوت تعدين! 🚀";
-            window.open(https://t.me/share/url?url=${botUrl}&text=${text});
-        }
-
-        function update() {
-            localStorage.setItem('binasou_score', score);
-            balDisplay.innerText = score.toLocaleString();
-        }
-    </script>
-</body>
-</html>
+    <div id="mining-page" class="page active">
+        <div style="display:flex; justify-content: space-between; color:#ffb400; font-size: 0.9rem; padding: 0 10px;">
+            <span>⛏️ Binasou Miner</span>
+            <span>رتبة: محترف 🚀</span>
+        </div>
+        
+        <div class="gold-logo" onclick="mineCoins()">Binasou</div>
+        
+        <div class="balance-container
