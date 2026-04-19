@@ -1,40 +1,65 @@
-<div id="friends" class="page">
+<div id="page-friends" class="page">
             <h2 style="color: var(--gold)">نظام الإحالة 👥</h2>
             <div style="margin-top: 60px">
-                <h1 style="color: var(--gold); font-size: 50px;">+3,000</h1>
+                <h1 style="color: var(--gold); font-size: 60px;">+3,000</h1>
                 <p>عن كل صديق يسجل من خلالك</p>
-                <button class="task-btn" style="width: 80%; padding: 18px;" onclick="shareLink()">دعوة الأصدقاء 🚀</button>
+                <button class="action-btn" style="width: 80%; padding: 18px;" onclick="inviteFriend()">دعوة الأصدقاء 🚀</button>
             </div>
         </div>
+
     </div>
 
-    <div class="nav-bar">
-        <div class="nav-item" onclick="changePage('friends', this)">الأصدقاء</div>
-        <div class="nav-item active-nav" onclick="changePage('mine', this)">تعدين</div>
-        <div class="nav-item" onclick="changePage('tasks', this)">المهام</div>
+    <div class="bottom-nav">
+        <div class="nav-tab" onclick="switchTab('page-friends', this)">الأصدقاء</div>
+        <div class="nav-item nav-tab active-tab" onclick="switchTab('page-mine', this)">تعدين</div>
+        <div class="nav-tab" onclick="switchTab('page-tasks', this)">المهام</div>
     </div>
 
     <script>
-        // المحرك البرمجي للبوت
-        let userPoints = parseInt(localStorage.getItem('binasou_v3_points')) || 0;
-        const balDisplay = document.getElementById('balance');
+        // نظام النقاط (حفظ واسترجاع)
+        let goldCount = parseInt(localStorage.getItem('binasou_p')) || 0;
+        const balEl = document.getElementById('main-balance');
 
-        function sync() {
-            balDisplay.innerText = userPoints.toLocaleString();
-            localStorage.setItem('binasou_v3_points', userPoints);
+        function refreshUI() {
+            balEl.innerText = goldCount.toLocaleString();
+            localStorage.setItem('binasou_p', goldCount);
         }
 
-        // تشغيل النقر
-        document.getElementById('tapTarget').addEventListener('click', function() {
-            userPoints++;
-            sync();
-        });
+        // 1. تفعيل زر التعدين (B)
+        document.getElementById('coinTap').onclick = () => {
+            goldCount++;
+            refreshUI();
+        };
 
-        // تشغيل الروابط والمكافآت
-        function executeTask(url, reward) {
-            window.open(url, '_blank'); // فتح الرابط
-            setTimeout(() => { // إضافة المكافأة بعد ثوانٍ
-                userPoints += reward;
-                sync();
-                alert("تم التحقق وإضافة " + reward + " نقطة لرصيدك! 🎉");
-            },
+        // 2. تفعيل تغيير الصفحات (الناف بار)
+        function switchTab(targetId, navEl) {
+            // إخفاء كل الصفحات
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // إلغاء تفعيل كل الأزرار
+            document.querySelectorAll('.nav-tab').forEach(n => n.classList.remove('active-tab'));
+            
+            // إظهار الصفحة المطلوبة وتفعيل زرها
+            document.getElementById(targetId).classList.add('active');
+            navEl.classList.add('active-tab');
+        }
+
+        // 3. تفعيل الروابط مع إضافة مكافأة
+        function openLink(url, reward) {
+            window.open(url, '_blank');
+            setTimeout(() => {
+                goldCount += reward;
+                refreshUI();
+                alert("تم التحقق! أضفنا " + reward + " إلى رصيدك 🎉");
+            }, 2000);
+        }
+
+        // 4. تفعيل زر المشاركة
+        function inviteFriend() {
+            const shareUrl = "https://t.me/share/url?url=https://t.me/binasou_win_bot&text=ابدأ جمع الذهب في BINASOU!";
+            window.open(shareUrl, '_blank');
+        }
+
+        refreshUI();
+    </script>
+</body>
+</html>
