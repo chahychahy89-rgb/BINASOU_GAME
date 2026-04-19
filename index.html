@@ -1,65 +1,56 @@
-<div id="page-friends" class="page">
-            <h2 style="color: var(--gold)">نظام الإحالة 👥</h2>
-            <div style="margin-top: 60px">
-                <h1 style="color: var(--gold); font-size: 60px;">+3,000</h1>
-                <p>عن كل صديق يسجل من خلالك</p>
-                <button class="action-btn" style="width: 80%; padding: 18px;" onclick="inviteFriend()">دعوة الأصدقاء 🚀</button>
+<div style="margin-top:40px;">
+                <h1 style="color:#ffae00; font-size:60px;">3,000</h1>
+                <p>عن كل صديق ينضم</p>
+                <button class="gold-btn" style="width:200px; padding:15px;" onclick="shareGame()">دعوة الأصدقاء 🚀</button>
             </div>
         </div>
-
     </div>
 
-    <div class="bottom-nav">
-        <div class="nav-tab" onclick="switchTab('page-friends', this)">الأصدقاء</div>
-        <div class="nav-item nav-tab active-tab" onclick="switchTab('page-mine', this)">تعدين</div>
-        <div class="nav-tab" onclick="switchTab('page-tasks', this)">المهام</div>
+    <div class="nav-bar">
+        <div class="nav-link" onclick="tab('friends', this)">الأصدقاء</div>
+        <div class="nav-link nav-active" onclick="tab('mine', this)">تعدين</div>
+        <div class="nav-link" onclick="tab('tasks', this)">المهام</div>
     </div>
 
     <script>
-        // نظام النقاط (حفظ واسترجاع)
-        let goldCount = parseInt(localStorage.getItem('binasou_p')) || 0;
-        const balEl = document.getElementById('main-balance');
+        // نظام النقاط والتشغيل
+        let pts = parseInt(localStorage.getItem('b_pts')) || 0;
+        const bal = document.getElementById('balance');
 
-        function refreshUI() {
-            balEl.innerText = goldCount.toLocaleString();
-            localStorage.setItem('binasou_p', goldCount);
+        function update() {
+            bal.innerText = pts.toLocaleString();
+            localStorage.setItem('b_pts', pts);
         }
 
-        // 1. تفعيل زر التعدين (B)
+        // تفعيل النقر على العملة
         document.getElementById('coinTap').onclick = () => {
-            goldCount++;
-            refreshUI();
+            pts++;
+            update();
         };
 
-        // 2. تفعيل تغيير الصفحات (الناف بار)
-        function switchTab(targetId, navEl) {
-            // إخفاء كل الصفحات
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // إلغاء تفعيل كل الأزرار
-            document.querySelectorAll('.nav-tab').forEach(n => n.classList.remove('active-tab'));
-            
-            // إظهار الصفحة المطلوبة وتفعيل زرها
-            document.getElementById(targetId).classList.add('active');
-            navEl.classList.add('active-tab');
+        // تفعيل تبديل الصفحات (حل مشكلة التوقف)
+        function tab(id, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('nav-active'));
+            document.getElementById(id).classList.add('active-tab');
+            el.classList.add('nav-active');
         }
 
-        // 3. تفعيل الروابط مع إضافة مكافأة
-        function openLink(url, reward) {
+        // تفعيل الروابط والمكافآت
+        function openTask(url, reward) {
             window.open(url, '_blank');
             setTimeout(() => {
-                goldCount += reward;
-                refreshUI();
-                alert("تم التحقق! أضفنا " + reward + " إلى رصيدك 🎉");
+                pts += reward;
+                update();
+                alert('مبروك! تم إضافة ' + reward + ' نقطة');
             }, 2000);
         }
 
-        // 4. تفعيل زر المشاركة
-        function inviteFriend() {
-            const shareUrl = "https://t.me/share/url?url=https://t.me/binasou_win_bot&text=ابدأ جمع الذهب في BINASOU!";
-            window.open(shareUrl, '_blank');
+        function shareGame() {
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم إلينا!");
         }
 
-        refreshUI();
+        update();
     </script>
 </body>
 </html>
