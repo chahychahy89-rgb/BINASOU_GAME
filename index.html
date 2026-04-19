@@ -1,56 +1,66 @@
-<div style="margin-top:40px;">
-                <h1 style="color:#ffae00; font-size:60px;">3,000</h1>
-                <p>عن كل صديق ينضم</p>
-                <button class="gold-btn" style="width:200px; padding:15px;" onclick="shareGame()">دعوة الأصدقاء 🚀</button>
+<div id="page-friends" class="page">
+            <h2 style="color:#ffae00">دعوة الأصدقاء</h2>
+            <div style="margin-top:50px">
+                <h1 style="color:#ffae00; font-size:70px;">3,000</h1>
+                <p>لكل صديق ينضم عبرك</p>
+                <button class="action-btn" style="width:200px; padding:18px;" onclick="invite()">دعوة الآن 🚀</button>
             </div>
         </div>
+
     </div>
 
     <div class="nav-bar">
-        <div class="nav-link" onclick="tab('friends', this)">الأصدقاء</div>
-        <div class="nav-link nav-active" onclick="tab('mine', this)">تعدين</div>
-        <div class="nav-link" onclick="tab('tasks', this)">المهام</div>
+        <div class="nav-item" onclick="showTab('page-friends', this)">الأصدقاء</div>
+        <div class="nav-item nav-active" onclick="showTab('page-mine', this)">تعدين</div>
+        <div class="nav-item" onclick="showTab('page-tasks', this)">المهام</div>
     </div>
 
     <script>
-        // نظام النقاط والتشغيل
-        let pts = parseInt(localStorage.getItem('b_pts')) || 0;
-        const bal = document.getElementById('balance');
+        // المحرك البرمجي الأساسي
+        let points = parseInt(localStorage.getItem('binasou_points')) || 0;
+        const balDisplay = document.getElementById('balance');
 
-        function update() {
-            bal.innerText = pts.toLocaleString();
-            localStorage.setItem('b_pts', pts);
+        function updateUI() {
+            balDisplay.innerText = points.toLocaleString();
+            localStorage.setItem('binasou_points', points);
         }
 
-        // تفعيل النقر على العملة
-        document.getElementById('coinTap').onclick = () => {
-            pts++;
-            update();
+        // 1. تفعيل النقر على العملة
+        document.getElementById('mainCoin').onclick = function() {
+            points++;
+            updateUI();
         };
 
-        // تفعيل تبديل الصفحات (حل مشكلة التوقف)
-        function tab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('nav-active'));
-            document.getElementById(id).classList.add('active-tab');
-            el.classList.add('nav-active');
+        // 2. تفعيل تبديل الصفحات (حل مشكلة الأزرار التي لا تعمل)
+        function showTab(pageId, element) {
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // إلغاء تفعيل جميع أزرار الناف بار
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('nav-active'));
+            
+            // إظهار الصفحة المطلوبة وتفعيل زرها
+            document.getElementById(pageId).classList.add('active');
+            element.classList.add('nav-active');
         }
 
-        // تفعيل الروابط والمكافآت
-        function openTask(url, reward) {
+        // 3. تفعيل الروابط مع إضافة المكافأة
+        function openLink(url, reward) {
             window.open(url, '_blank');
             setTimeout(() => {
-                pts += reward;
-                update();
-                alert('مبروك! تم إضافة ' + reward + ' نقطة');
+                points += reward;
+                updateUI();
+                alert("تم التحقق! أضفنا " + reward + " ذهبة لرصيدك 🎉");
             }, 2000);
         }
 
-        function shareGame() {
-            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم إلينا!");
+        // 4. تفعيل نظام الإحالة
+        function invite() {
+            const url = "https://t.me/share/url?url=https://t.me/binasou_win_bot&text=اجمع الذهب معي في BINASOU!";
+            window.open(url, '_blank');
         }
 
-        update();
+        // تشغيل الرصيد عند فتح التطبيق
+        updateUI();
     </script>
 </body>
 </html>
