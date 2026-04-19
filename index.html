@@ -1,36 +1,60 @@
-<div class="navbar">
-        <div class="nav-item" onclick="show('friends', this)">الأصدقاء</div>
-        <div class="nav-item active-nav" onclick="show('mine', this)">تعدين</div>
-        <div class="nav-item" onclick="show('tasks', this)">المهام</div>
+</div>
+                <div class="task-item">
+                    <div style="text-align:right">قناة اليوتيوب<br><span style="color:#ffae00">+5,000 💰</span></div>
+                    <a href="https://youtube.com/@chamschams-y7w" target="_blank" class="task-btn" onclick="rewardUser(5000)">اشتراك</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="friends-tab" class="tab-content">
+            <div style="padding-top:40px;">
+                <p>اربح عن كل صديق</p>
+                <h1 style="color:#ffae00; font-size:50px;">3,000</h1>
+                <button class="task-btn" style="width:200px; padding:15px;" onclick="shareGame()">دعوة الأصدقاء 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        <div class="nav-link" onclick="switchTab('friends-tab', this)">الأصدقاء</div>
+        <div class="nav-link active-link" onclick="switchTab('mine-tab', this)">تعدين</div>
+        <div class="nav-link" onclick="switchTab('tasks-tab', this)">المهام</div>
     </div>
 
     <script>
-        let score = parseInt(localStorage.getItem('binasou_score')) || 0;
-        const display = document.getElementById('balance');
+        let score = parseInt(localStorage.getItem('binasou_points')) || 0;
+        const balDisplay = document.getElementById('balance');
 
-        function update() {
-            display.innerText = score.toLocaleString();
-            localStorage.setItem('binasou_score', score);
+        function updateUI() {
+            balDisplay.innerText = score.toLocaleString();
+            localStorage.setItem('binasou_points', score);
         }
 
-        function show(id, el) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
-            document.getElementById(id).classList.add('active-view');
-            el.classList.add('active-nav');
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+            document.getElementById(tabId).classList.add('active-tab');
+            el.classList.add('active-link');
         }
 
-        document.getElementById('tapBtn').onclick = () => { score++; update(); };
+        document.getElementById('coinTap').onclick = function() {
+            score++;
+            updateUI();
+        };
 
-        function addBonus(n) {
-            setTimeout(() => { score += n; update(); alert('تم إضافة المكافأة!'); }, 2000);
+        function rewardUser(amt) {
+            setTimeout(() => {
+                score += amt;
+                updateUI();
+                alert('مبروك! تم استلام ' + amt);
+            }, 2000);
         }
 
-        function invite() {
-            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم واربح الذهب!");
+        function shareGame() {
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=ابدأ التعدين الآن!");
         }
 
-        update();
+        updateUI();
     </script>
 </body>
 </html>
