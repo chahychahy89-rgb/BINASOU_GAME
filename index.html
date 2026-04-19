@@ -1,36 +1,36 @@
-.bottom-nav {
-            height: 85px;
-            background: #080808;
-            border-top: 1px solid #222;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: 10px;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #555;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .nav-item svg { width: 28px; height: 28px; margin-bottom: 5px; fill: currentColor; }
-        .nav-item.active-nav { color: #ffae00; }
-    </style>
-</head>
-<body>
-
-    <div class="top-nav">
-        <div id="balance">0</div>
-        <div class="currency-name">GOLD COINS</div>
+<div class="navbar">
+        <div class="nav-item" onclick="show('friends', this)">الأصدقاء</div>
+        <div class="nav-item active-nav" onclick="show('mine', this)">تعدين</div>
+        <div class="nav-item" onclick="show('tasks', this)">المهام</div>
     </div>
 
-    <div class="main-view">
-        
-        <div id="page-mine" class="page active">
-            <div class="coin-wrapper">
-                <div class="coin" id="tap-target">B</div>
-            </div>
-        </div>
+    <script>
+        let score = parseInt(localStorage.getItem('binasou_score')) || 0;
+        const display = document.getElementById('balance');
+
+        function update() {
+            display.innerText = score.toLocaleString();
+            localStorage.setItem('binasou_score', score);
+        }
+
+        function show(id, el) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
+            document.getElementById(id).classList.add('active-view');
+            el.classList.add('active-nav');
+        }
+
+        document.getElementById('tapBtn').onclick = () => { score++; update(); };
+
+        function addBonus(n) {
+            setTimeout(() => { score += n; update(); alert('تم إضافة المكافأة!'); }, 2000);
+        }
+
+        function invite() {
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم واربح الذهب!");
+        }
+
+        update();
+    </script>
+</body>
+</html>
