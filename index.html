@@ -2,56 +2,51 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BINASOU GOLD</title>
     <style>
-        /* التنسيق الفاخر */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background-color: #0b0b0b !important; 
-            color: #ffffff; 
-            margin: 0; padding: 0; 
-            display: flex; flex-direction: column; 
-            height: 100vh; font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
-        }
-
-        /* الرصيد العلوي */
-        .header {
-            padding: 30px 0;
-            text-align: center;
-            background: linear-gradient(to bottom, #1a1a1a, #0b0b0b);
-            border-bottom: 2px solid #ffae00;
-        }
-        #balance { font-size: 55px; color: #ffae00; font-weight: bold; text-shadow: 0 0 20px rgba(255,174,0,0.3); }
-        .label { color: #888; font-size: 14px; letter-spacing: 2px; }
-
-        /* منطقة العرض الرئيسية */
-        .content { flex: 1; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
-        .view { display: none; width: 100%; max-width: 400px; text-align: center; }
-        .active { display: block !important; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* زر العملة B */
+        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { padding: 20px; border-bottom: 2px solid #ffae00; background: #111; }
+        #balance { font-size: 50px; color: #ffae00; font-weight: bold; }
         .coin {
-            width: 240px; height: 240px;
-            background: radial-gradient(circle, #ffae00, #b8860b);
-            border: 10px solid #222;
-            border-radius: 50%;
-            margin: 0 auto;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 100px; font-weight: 900; color: #000;
-            box-shadow: 0 0 40px rgba(255,174,0,0.2);
-            cursor: pointer; transition: 0.1s;
+            width: 200px; height: 200px; border-radius: 50%;
+            background: linear-gradient(#ffae00, #b8860b);
+            margin: 50px auto; display: flex; align-items: center;
+            justify-content: center; font-size: 80px; color: #000;
+            font-weight: bold; border: 5px solid #fff; cursor: pointer;
         }
-        .coin:active { transform: scale(0.94); }
+        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #111; border-top: 1px solid #333; }
+        .nav div { flex: 1; padding: 20px; color: #ffae00; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
 
-        /* تصميم البطاقات */
-        .card {
-            background: #1a1a1a; padding: 20px; border-radius: 20px;
-            margin-bottom: 15px; border: 1px solid #333;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .task-btn {
-            background: #ffae00; color: #000; padding: 12px 25px;
-            border-radius: 12px; font-weight: bold;
+<div class="header">
+    <div id="balance">0</div>
+    <div>BINASOU GOLD</div>
+</div>
+
+<div id="mine-page">
+    <div class="coin" onclick="tap()">B</div>
+    <p>اضغط على حرف B للتعدين</p>
+</div>
+
+<div class="nav">
+    <div onclick="alert('قريباً.. دعوة الأصدقاء')">الأصدقاء</div>
+    <div onclick="location.reload()">تعدين</div>
+    <div onclick="alert('قريباً.. المهام اليومية')">المهام</div>
+</div>
+
+<script>
+    let points = parseInt(localStorage.getItem('b_pts')) || 0;
+    document.getElementById('balance').innerText = points;
+
+    function tap() {
+        points++;
+        document.getElementById('balance').innerText = points;
+        localStorage.setItem('b_pts', points);
+    }
+</script>
+
+</body>
+</html>
