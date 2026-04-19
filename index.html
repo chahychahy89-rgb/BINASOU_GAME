@@ -1,23 +1,36 @@
-document.querySelectorAll('.page-content').forEach(p => p.classList.remove('is-visible'));
-            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('is-visible');
-            btn.classList.add('active');
+.bottom-nav {
+            height: 85px;
+            background: #080808;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 10px;
         }
-
-        document.getElementById('main-tap-btn').onclick = function() {
-            currentGold++;
-            refreshData();
-        };
-
-        function giveBonus(num) {
-            setTimeout(() => { currentGold += num; refreshData(); alert('تم استلام المكافأة!'); }, 2000);
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #555;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        .nav-item svg { width: 28px; height: 28px; margin-bottom: 5px; fill: currentColor; }
+        .nav-item.active-nav { color: #ffae00; }
+    </style>
+</head>
+<body>
 
-        function shareApp() {
-            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=انضم واربح!");
-        }
+    <div class="top-nav">
+        <div id="balance">0</div>
+        <div class="currency-name">GOLD COINS</div>
+    </div>
 
-        refreshData();
-    </script>
-</body>
-</html>
+    <div class="main-view">
+        
+        <div id="page-mine" class="page active">
+            <div class="coin-wrapper">
+                <div class="coin" id="tap-target">B</div>
+            </div>
+        </div>
