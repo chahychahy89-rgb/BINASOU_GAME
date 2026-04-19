@@ -1,66 +1,58 @@
-<div id="page-friends" class="page">
-            <h2 style="color:#ffae00">دعوة الأصدقاء</h2>
+<div id="friends" class="page">
+            <h2 style="color:#ffae00">نظام الإحالة 👥</h2>
             <div style="margin-top:50px">
-                <h1 style="color:#ffae00; font-size:70px;">3,000</h1>
-                <p>لكل صديق ينضم عبرك</p>
-                <button class="action-btn" style="width:200px; padding:18px;" onclick="invite()">دعوة الآن 🚀</button>
+                <h1 style="color:#ffae00; font-size:60px;">3,000</h1>
+                <p>عن كل صديق ينضم للبوت</p>
+                <button class="btn" style="width:200px; padding:15px;" onclick="invite()">دعوة الآن 🚀</button>
             </div>
         </div>
-
     </div>
 
     <div class="nav-bar">
-        <div class="nav-item" onclick="showTab('page-friends', this)">الأصدقاء</div>
-        <div class="nav-item nav-active" onclick="showTab('page-mine', this)">تعدين</div>
-        <div class="nav-item" onclick="showTab('page-tasks', this)">المهام</div>
+        <div class="nav-item" onclick="switchTab('friends', this)">الأصدقاء</div>
+        <div class="nav-item nav-active" onclick="switchTab('mine', this)">تعدين</div>
+        <div class="nav-item" onclick="switchTab('tasks', this)">المهام</div>
     </div>
 
     <script>
-        // المحرك البرمجي الأساسي
-        let points = parseInt(localStorage.getItem('binasou_points')) || 0;
-        const balDisplay = document.getElementById('balance');
+        // نظام النقاط والبرمجة
+        let gold = parseInt(localStorage.getItem('userGold')) || 0;
+        const balEl = document.getElementById('balance');
 
-        function updateUI() {
-            balDisplay.innerText = points.toLocaleString();
-            localStorage.setItem('binasou_points', points);
+        function sync() {
+            balEl.innerText = gold.toLocaleString();
+            localStorage.setItem('userGold', gold);
         }
 
-        // 1. تفعيل النقر على العملة
-        document.getElementById('mainCoin').onclick = function() {
-            points++;
-            updateUI();
+        // تفعيل النقر على العملة
+        document.getElementById('tapBtn').onclick = () => {
+            gold++;
+            sync();
         };
 
-        // 2. تفعيل تبديل الصفحات (حل مشكلة الأزرار التي لا تعمل)
-        function showTab(pageId, element) {
-            // إخفاء جميع الصفحات
+        // تفعيل التنقل بين الصفحات (حل مشكلة الأزرار الميتة)
+        function switchTab(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // إلغاء تفعيل جميع أزرار الناف بار
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('nav-active'));
-            
-            // إظهار الصفحة المطلوبة وتفعيل زرها
-            document.getElementById(pageId).classList.add('active');
-            element.classList.add('nav-active');
+            document.getElementById(id).classList.add('active');
+            el.classList.add('nav-active');
         }
 
-        // 3. تفعيل الروابط مع إضافة المكافأة
-        function openLink(url, reward) {
+        // تفعيل الروابط مع المكافآت
+        function goTask(url, reward) {
             window.open(url, '_blank');
             setTimeout(() => {
-                points += reward;
-                updateUI();
-                alert("تم التحقق! أضفنا " + reward + " ذهبة لرصيدك 🎉");
+                gold += reward;
+                sync();
+                alert("تم التحقق وإضافة " + reward + " نقطة! 🎉");
             }, 2000);
         }
 
-        // 4. تفعيل نظام الإحالة
         function invite() {
-            const url = "https://t.me/share/url?url=https://t.me/binasou_win_bot&text=اجمع الذهب معي في BINASOU!";
-            window.open(url, '_blank');
+            window.open("https://t.me/share/url?url=https://t.me/binasou_win_bot&text=اجمع الذهب معي!");
         }
 
-        // تشغيل الرصيد عند فتح التطبيق
-        updateUI();
+        sync();
     </script>
 </body>
 </html>
